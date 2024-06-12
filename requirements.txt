@@ -1,0 +1,9 @@
+Flask
+Flask-Login
+Flask-WTF
+pyModbusTCP
+Flask-SQLAlchemy
+flask-caching
+pymysql
+cryptography
+python-dotenv
