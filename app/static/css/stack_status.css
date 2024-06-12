@@ -8,13 +8,65 @@ body {
 
 .container {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     width: 100%;
     max-width: 1200px;
     padding: 20px;
     box-sizing: border-box;
     margin-top: 20px;
+}
+
+.summary-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.summary-box {
+    padding: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 3D effect */
+    font-weight: bold;
+    flex: 1;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.summary-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.summary-green {
+    background-color: #4caf50; /* Material design green */
+}
+
+.summary-yellow {
+    background-color: #ffeb3b; /* Material design yellow */
+    color: black;
+}
+
+.summary-red {
+    background-color: #f44336; /* Material design red */
+}
+
+.summary-blue {
+    background-color: #2196f3; /* Material design blue */
+}
+
+.summary-white {
+    background-color: #ffffff;
+    color: black;
+    border: 1px solid #ccc;
 }
 
 .status-section {
@@ -67,7 +119,7 @@ body {
     white-space: normal; /* Ensure wrapping works */
     background-color: gray; /* Default background color when off */
     cursor: pointer; /* Change cursor to pointer */
-    user-select: none; 
+    user-select: none;
 }
 
 .context-menu {

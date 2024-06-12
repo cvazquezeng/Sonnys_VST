@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 updateSquare(option, data.status[option]);
                             }
                         });
+                        updateSummaryCounts(data.status); // Update summary counts
                     } else {
                         console.error("Failed to get continuous status data");
                     }
@@ -127,6 +128,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
         setInterval(fetchContinuousStatus, 15000);
         fetchContinuousStatus(); // Initial fetch to populate data immediately
+    }
+
+    // Function to update summary counts
+    function updateSummaryCounts(status) {
+        let greenCount = 0;
+        let yellowCount = 0;
+        let redCount = 0;
+        let blueCount = 0;
+        let whiteCount = 0;
+
+        statusOptions.forEach(option => {
+            const coilStatus = status[option];
+            if (coilStatus) {
+                if (coilStatus.green) greenCount++;
+                if (coilStatus.yellow) yellowCount++;
+                if (coilStatus.red) redCount++;
+                if (coilStatus.blue) blueCount++;
+                if (coilStatus.white) whiteCount++;
+            }
+        });
+
+        document.getElementById('green-count').textContent = greenCount;
+        document.getElementById('yellow-count').textContent = yellowCount;
+        document.getElementById('red-count').textContent = redCount;
+        document.getElementById('blue-count').textContent = blueCount;
+        document.getElementById('white-count').textContent = whiteCount;
     }
 
     function sendControlRequest(address, state, selected) {
