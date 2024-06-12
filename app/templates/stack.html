@@ -1,0 +1,72 @@
+<!-- app/templates/stack.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/stack.css') }}">
+
+<div class="container">
+    <div class="control-section">
+        <div class="image-container">
+            <img id="stack-image" class="stack-image" src="{{ url_for('static', filename='images/stack.png') }}" alt="Stack Light Image">
+            <div id="green-overlay" class="overlay green"></div>
+            <div id="white-overlay" class="overlay white"></div>
+            <div id="blue-overlay" class="overlay blue"></div>
+            <div id="yellow-overlay" class="overlay yellow"></div>
+            <div id="red-overlay" class="overlay red"></div>
+        </div>
+        <div class="buttons-container">
+            <div class="dropdown">
+                <select id="dropdown-menu">
+                    <!-- Options dynamically generated using JavaScript -->
+                </select>
+            </div>
+            <button class="button red" id="red-button">Red</button>
+            <button class="button yellow" id="yellow-button">Yellow</button>
+            <button class="button blue" id="blue-button">Blue</button>
+            <button class="button white" id="white-button">White</button>
+            <button class="button green" id="green-button">Green</button>
+            <button class="button off" id="off-button">OFF</button>
+        </div>
+    </div>
+    <div class="status-section" id="status-section">
+        <div class="status-header">5605 Building</div>
+        <div class="status-grid" id="status-grid">
+            <!-- Squares dynamically generated using JavaScript -->
+        </div>
+    </div>
+
+    <div class="context-menu" id="context-menu">
+        <ul>
+            <li data-color="off">OFF</li>
+            <li data-color="red">Red</li>
+            <li data-color="yellow">Yellow</li>
+            <li data-color="blue">Blue</li>
+            <li data-color="white">White</li>
+            <li data-color="green">Green</li>
+        </ul>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<!-- Inactivity Timer Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let time;
+        
+        function resetTimer() {
+            clearTimeout(time);
+            time = setTimeout(logout, 900000);  // 15 minutes in milliseconds
+        }
+
+        function logout() {
+            alert('You have been logged out due to inactivity.');
+            window.location.href = "{{ url_for('auth.logout') }}";
+        }
+
+        window.onload = resetTimer;
+        document.onmousemove = resetTimer;
+        document.onkeypress = resetTimer;
+        document.ontouchstart = resetTimer;  // For touch devices
+    });
+</script>
+{% endblock %}

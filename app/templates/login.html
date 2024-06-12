@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <form id="login-form" method="POST" action="{{ url_for('auth.login') }}" autocomplete="off">
+                {{ form.hidden_tag() }}
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='images/logonobg.png') }}" alt="Logo">
+                </div>
+                <h2>Login Page</h2>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <div class="input-group">
+                    <div class="icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <label for="username">Username</label>
+                    {{ form.username(class_='input-field', autocomplete='off') }}
+                </div>
+                <div class="input-group">
+                    <div class="icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <label for="password">Password</label>
+                    {{ form.password(class_='input-field', autocomplete='off') }}
+                </div>
+                <div class="input-group">
+                    {{ form.submit(class_='login-button') }}
+                </div>
+                <a href="{{ url_for('auth.password_recovery') }}" class="password-recovery">Forgot password?</a>
+            </form>
+            <div class="social-login">
+                <p>Connect with these services:</p>
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and dependencies if needed -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

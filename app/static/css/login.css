@@ -1,0 +1,190 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url("/static/images/andon.png") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    background-size: cover; /* Ensure the blurred background covers the screen */
+    filter: blur(4px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Add media query for mobile devices */
+@media (max-width: 768px) {
+    body {
+        background-size: cover; /* Ensure the background covers the screen on mobile */
+    }
+    body::before {
+        background-size: cover; /* Ensure the blurred background covers the screen on mobile */
+    }
+    
+    .login-box {
+        padding: 20px; /* Reduce padding for mobile */
+        max-width: 90%; /* Reduce max-width for mobile */
+        width: 90%; /* Ensure it doesn't span the full width */
+        margin: 0 5%; /* Center the login box */
+    }
+    
+    h2 {
+        font-size: 20px; /* Further reduce font size for mobile */
+    }
+    
+    .social-icon {
+        font-size: 20px; /* Further reduce font size for social icons on mobile */
+    }
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.login-box {
+    background-color: rgba(255, 254, 254, .9); /* Slightly transparent white background */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    z-index: 2;
+}
+
+.logo {
+    max-width: 100%; /* Ensure the logo doesn't exceed the box width */
+    margin-bottom: 20px;
+}
+
+.logo img {
+    max-width: 100%; /* Ensure the logo image is responsive */
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+    margin: 0 auto; /* Center the image */
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #004E99; /* Set the color to the desired blue */
+    font-size: 28px; /* Adjust font size */
+    font-weight: 700; /* Adjust font weight */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a professional font */
+    text-align: center; /* Center the text */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+    position: relative; /* For positioning icons */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px 10px 10px 40px; /* Add padding for icons */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px; /* Set a font size for input text */
+}
+
+.icon {
+    position: absolute;
+    top: 35px; /* Adjust based on input field height */
+    left: 10px;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Blue color for the login button */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+.password-recovery {
+    display: block;
+    margin-top: 10px;
+    color: #007bff; /* Blue color */
+    text-decoration: none;
+}
+
+.password-recovery:hover {
+    text-decoration: underline;
+}
+
+.flash-message {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 3; /* Ensure it is above other elements */
+    position: relative;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.flash-message.login-required {
+    background-color: #f8d7da; /* Same background as error */
+    color: #721c24; /* Same text color as error */
+    border: 1px solid #f5c6cb; /* Same border as error */
+}
+
+.social-login {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-login p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.social-icon {
+    margin: 0 10px;
+    font-size: 30px; /* Adjusted font size for larger icons */
+    color: #004E99; /* Set the color to the desired blue */
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    color: #0c2847; /* Darker blue */
+}

@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+.status-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Updated to take full width */
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 10px #eee;
+    margin-top: 20px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.status-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Updated to use CSS Grid */
+    gap: 10px; /* Spacing between squares */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.status-square {
+    position: relative;
+    z-index: 10; /* Ensure it's above other elements */
+    width: 100%; /* Adjusted width to be flexible */
+    height: 120px; /* Adjusted height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px #aaa;
+    border-radius: 5px;
+    color: white; /* Default text color */
+    font-size: 14px; /* Adjusted font size */
+    padding: 5px; /* Add some padding */
+    overflow-wrap: break-word; /* Allow word wrapping */
+    word-wrap: break-word; /* For older browsers */
+    white-space: normal; /* Ensure wrapping works */
+    background-color: gray; /* Default background color when off */
+    cursor: pointer; /* Change cursor to pointer */
+    user-select: none; 
+}
+
+.context-menu {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.context-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.context-menu ul li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.context-menu ul li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .status-section {
+        width: 100%;
+    }
+}

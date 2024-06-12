@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/stack_status.css') }}">
+
+<div class="container">
+    <div class="status-section" id="status-section">
+        <div class="status-header">5605 Building</div>
+        <div class="status-grid" id="status-grid">
+            <!-- Squares dynamically generated using JavaScript -->
+        </div>
+    </div>
+
+    <div class="context-menu" id="context-menu">
+        <ul>
+            <li data-color="off">OFF</li>
+            <li data-color="red">Red</li>
+            <li data-color="yellow">Yellow</li>
+            <li data-color="blue">Blue</li>
+            <li data-color="white">White</li>
+            <li data-color="green">Green</li>
+        </ul>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/stack_status.js') }}"></script>
+{% endblock %}
