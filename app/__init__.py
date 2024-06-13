@@ -1,9 +1,10 @@
+# app/__init__.py
 from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_caching import Cache
+
 import logging
-import os
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -17,6 +18,7 @@ def create_app(config_class):
     db.init_app(app)
     login_manager.init_app(app)
     cache.init_app(app, config={'CACHE_TYPE': 'simple'})
+    login_manager.login_view = 'auth.login'
 
     # Setup logging
     logging.basicConfig(level=logging.DEBUG)
@@ -33,7 +35,7 @@ def create_app(config_class):
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
-    app.register_blueprint(api_bp)
+    app.register_blueprint(api_bp)  # Ensure this is registered only once
 
     @app.after_request
     def add_header(response):

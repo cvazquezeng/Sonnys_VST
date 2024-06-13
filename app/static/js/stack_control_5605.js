@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         function sendControlRequest(address, state, selected) {
-            fetch('/control', {
+            fetch('/api/control_5605', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         function fetchStatus(selected) {
-            fetch(`/status?selected=${selected}`)
+            fetch(`/api/status_5605?selected=${selected}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.status) {

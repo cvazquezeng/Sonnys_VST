@@ -71,20 +71,46 @@
                 <!-- Collapsible menu for 5605 Building -->
                 <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fas fa-layer-group fa-fw mr-3"></span>
+                        <span class="fas fa-industry fa-fw mr-3"></span>
                         <span class="menu-collapsed">5605 Building</span>
                         <span class="fas fa-caret-down ml-auto"></span>
                     </div>
                 </a>
                 <!-- Submenu -->
                 <div id="submenu1" class="collapse sidebar-submenu">
-                    <a href="{{ url_for('main.stack_control') }}" class="list-group-item list-group-item-action bg-dark text-white">
+                    <a href="{{ url_for('main.stack_control_5605') }}" class="list-group-item list-group-item-action bg-dark text-white">
                         <span class="menu-collapsed">Stack Control</span>
                     </a>
-                    <a href="{{ url_for('main.stack_status') }}" class="list-group-item list-group-item-action bg-dark text-white">
+                    <a href="{{ url_for('main.stack_status_5605') }}" class="list-group-item list-group-item-action bg-dark text-white">
                         <span class="menu-collapsed">Stack Status</span>
                     </a>
                 </div>
+
+
+                <!-- Collapsible menu for 5607 Building -->
+                <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fas fa-industry fa-fw mr-3"></span>
+                        <span class="menu-collapsed">5607 Building</span>
+                        <span class="fas fa-caret-down ml-auto"></span>
+                    </div>
+                </a>
+                <!-- Submenu -->
+                <div id="submenu2" class="collapse sidebar-submenu">
+                    <a href="{{ url_for('main.stack_control_5607') }}" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">Stack Control</span>
+                    </a>
+                    <a href="{{ url_for('main.stack_status_5607') }}" class="list-group-item list-group-item-action bg-dark text-white">
+                        <span class="menu-collapsed">Stack Status</span>
+                    </a>
+                </div>
+
+
+
+
+
+
+
                 <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
                     <small>ACTIONS</small>
                 </li>
@@ -136,10 +162,10 @@
                                 <a class="nav-link" href="{{ url_for('main.settings') }}"><i class="fas fa-cogs"></i> Settings</a>
                             </li>
                             <li class="nav-item d-md-none">
-                                <a class="nav-link" href="{{ url_for('main.stack_control') }}"><i class="fas fa-layer-group"></i> Stack Control</a>
+                                <a class="nav-link" href="{{ url_for('main.stack_control_5605') }}"><i class="fas fa-layer-group"></i> Stack Control</a>
                             </li>
                             <li class="nav-item d-md-none">
-                                <a class="nav-link" href="{{ url_for('main.stack_status') }}"><i class="fas fa-layer-group"></i> Stack Status</a>
+                                <a class="nav-link" href="{{ url_for('main.stack_status_5605') }}"><i class="fas fa-layer-group"></i> Stack Status</a>
                             </li>
                         </ul>
                     </div>
@@ -150,7 +176,7 @@
             
             
             <!-- Page content -->
-            <div class="container-fluid mt-5 pt-5">
+            <div class="container-fluid">
                 {% block content %}{% endblock %}
             </div>
         </div>
@@ -163,7 +189,8 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- Custom JS -->
-    <script>
+    <!-- Include the inactivity script -->
+    <script src="{{ url_for('static', filename='js/inactivity-logout.js') }}"></script>    <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Highlight current page
             const currentUrl = window.location.pathname;

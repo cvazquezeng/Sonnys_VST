@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+.control-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.image-container {
+    position: relative;
+    width: 250px;
+    height: 300px;
+    text-align: center;
+}
+
+.stack-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10; /* Ensure the stack image is on top */
+}
+
+.overlay {
+    position: absolute;
+    width: 46.5%; /* Adjust width as needed */
+    height: 14%; /* Adjust height to fit the section of the image */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    pointer-events: none; /* Allows clicks to pass through to the image */
+    background-color: transparent; /* Default to transparent */
+}
+
+.overlay.red {
+    top: 10%;
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
+.overlay.yellow {
+    top: 23%;
+    background-color: rgba(255, 238, 0, 0.7);
+}
+
+.overlay.blue {
+    top: 39%;
+    background-color: rgba(47, 0, 255, 0.7);
+}
+
+.overlay.white {
+    top: 52%;
+    background-color: rgb(141, 138, 138);  
+}
+
+.overlay.green {
+    top: 67%;
+    background-color: rgba(76, 175, 80, 0.7);
+}
+
+.buttons-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.button {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: 2px solid black;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.button.green { background-color: #4CAF50; color: white; }
+.button.white { background-color: #ffffff; color: black; }
+.button.red { background-color: #ff0000; color: white; }
+.button.yellow { background-color: #ffee00; color: black; }
+.button.blue { background-color: #2f00ff; color: white; }
+.button.off { background-color: #818181; color: white; }
+
+.dropdown {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+}
+
+.dropdown select {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.dropdown::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 16px;
+}

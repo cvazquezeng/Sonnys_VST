@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/stack_control_5607.css') }}">
+
+<div class="container">
+    <div class="control-section">
+        <div class="image-container">
+            <img id="stack-image" class="stack-image" src="{{ url_for('static', filename='images/stack.png') }}" alt="Stack Light Image">
+            <div id="green-overlay" class="overlay green"></div>
+            <div id="white-overlay" class="overlay white"></div>
+            <div id="blue-overlay" class="overlay blue"></div>
+            <div id="yellow-overlay" class="overlay yellow"></div>
+            <div id="red-overlay" class="overlay red"></div>
+        </div>
+        <div class="buttons-container">
+            <div class="dropdown">
+                <select id="dropdown-menu">
+                    <!-- Options dynamically generated using JavaScript -->
+                </select>
+            </div>
+            <button class="button red" id="red-button">Red</button>
+            <button class="button yellow" id="yellow-button">Yellow</button>
+            <button class="button blue" id="blue-button">Blue</button>
+            <button class="button white" id="white-button">White</button>
+            <button class="button green" id="green-button">Green</button>
+            <button class="button off" id="off-button">OFF</button>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/stack_control_5607.js') }}"></script>
+{% endblock %}

@@ -166,7 +166,14 @@ h2 {
     color: #721c24; /* Same text color as error */
     border: 1px solid #f5c6cb; /* Same border as error */
 }
-
+.flash-message.logout {
+    background-color: red; /* Red background for logout */
+    color: white; /* White text for logout */
+    border: 1px solid darkred; /* Dark red border for logout */
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
 .social-login {
     margin-top: 20px;
     text-align: center;

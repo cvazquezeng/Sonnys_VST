@@ -1,5 +1,4 @@
 # app/routes/main.py
-
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, logout_user, current_user
 
@@ -28,13 +27,23 @@ def settings():
 
 @main_bp.route('/5605_stack_control')
 @login_required
-def stack_control():
-    return render_template('stack_control.html', title='5605 Stack Control')
+def stack_control_5605():
+    return render_template('stack_control_5605.html', title='5605 Stack Control')
 
 @main_bp.route('/5605_stack_status')
 @login_required
-def stack_status():
-    return render_template('stack_status.html', title='5605 Stack Status')
+def stack_status_5605():
+    return render_template('stack_status_5605.html', title='5605 Stack Status')
+
+@main_bp.route('/5607_stack_control')
+@login_required
+def stack_control_5607():
+    return render_template('stack_control_5607.html', title='5607 Stack Control')
+
+@main_bp.route('/5607_stack_status')
+@login_required
+def stack_status_5607():
+    return render_template('stack_status_5607.html', title='5607 Stack Status')
 
 @main_bp.route('/logout')
 @login_required

@@ -14,9 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "AW009-AW010", "AW011-AW012", "AW013-AW014", "AW015-AW016", "TIG"
         ];
 
-        // Function to create status squares
         function createStatusSquares() {
-            // Clear the status grid first to avoid duplicates
             statusGrid.innerHTML = "";
 
             statusOptions.forEach(function(option) {
@@ -27,16 +25,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 var showContextMenu = function(event) {
                     event.preventDefault();
-                    selectedSquare = event.target.textContent; // Assuming the option is stored in the text content
+                    selectedSquare = event.target.textContent;
                     contextMenu.style.top = `${event.pageY}px`;
                     contextMenu.style.left = `${event.pageX}px`;
                     setTimeout(() => {
                         contextMenu.style.display = "block";
-                    }, 100); // 100 milliseconds delay
+                    }, 100);
                 };
                 
                 square.addEventListener("contextmenu", showContextMenu);
-                
                 square.addEventListener("click", function(event) {
                     event.preventDefault();
                     showContextMenu(event);
@@ -83,35 +80,40 @@ document.addEventListener("DOMContentLoaded", function() {
                         break;
                 }
 
-                contextMenu.style.display = "none"; // Hide the context menu after selection
+                contextMenu.style.display = "none";
             });
         });
 
         function updateSquare(option, status) {
             var square = document.getElementById(option.replace(/ /g, "-"));
-            var colors = [];
-            if (status.green) colors.push('rgba(76, 175, 80, 0.7)');
-            if (status.white) colors.push('rgba(169, 169, 169, 0.7)');
-            if (status.blue) colors.push('rgba(47, 0, 255, 0.7)');
-            if (status.yellow) colors.push('rgba(255, 238, 0, 0.7)');
-            if (status.red) colors.push('rgba(255, 0, 0, 0.7)');
+            if (square) {
+                var colors = [];
+                if (status.green) colors.push('rgba(76, 175, 80, 0.7)');
+                if (status.white) colors.push('rgba(169, 169, 169, 0.7)');
+                if (status.blue) colors.push('rgba(47, 0, 255, 0.7)');
+                if (status.yellow) colors.push('rgba(255, 238, 0, 0.7)');
+                if (status.red) colors.push('rgba(255, 0, 0, 0.7)');
 
-            if (colors.length > 1) {
-                square.style.background = `linear-gradient(${colors.join(', ')})`;
-                square.style.color = 'white';
-            } else if (colors.length === 1) {
-                square.style.backgroundColor = colors[0];
-                square.style.color = (colors[0] === 'rgba(169, 169, 169, 0.7)') ? 'black' : 'white';
+                if (colors.length > 1) {
+                    square.style.background = `linear-gradient(${colors.join(', ')})`;
+                    square.style.color = 'white';
+                } else if (colors.length === 1) {
+                    square.style.backgroundColor = colors[0];
+                    square.style.color = (colors[0] === 'rgba(169, 169, 169, 0.7)') ? 'black' : 'white';
+                } else {
+                    square.style.backgroundColor = 'gray';
+                    square.style.color = 'white';
+                }
             } else {
-                square.style.backgroundColor = 'gray';
-                square.style.color = 'white';
+                console.error(`Square element not found for option: ${option}`);
             }
         }
 
         function fetchContinuousStatus() {
-            fetch('/continuous_status')
+            fetch('/api/continuous_status_5605')
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data); // Add this line to inspect the received data
                     if (data && data.status) {
                         statusOptions.forEach(function(option) {
                             if (data.status[option]) {
@@ -126,11 +128,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 .catch(error => console.error("Error fetching continuous status:", error));
         }
 
-        setInterval(fetchContinuousStatus, 15000);
-        fetchContinuousStatus(); // Initial fetch to populate data immediately
+        setInterval(fetchContinuousStatus, 30000);
+        fetchContinuousStatus();
     }
 
-    // Function to update summary counts
     function updateSummaryCounts(status) {
         let greenCount = 0;
         let yellowCount = 0;
@@ -157,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function sendControlRequest(address, state, selected) {
-        fetch('/control', {
+        fetch('/api/control_5605', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
