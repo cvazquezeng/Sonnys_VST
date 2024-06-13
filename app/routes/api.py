@@ -4,8 +4,7 @@ import threading
 import logging
 from ..modbus import control_lights, turn_off_lights, read_coils_status
 from ..modbus5607 import control_lights5607, turn_off_lights5607, read_coils_status5607
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+
 
 api_bp = Blueprint('api', __name__)
 
