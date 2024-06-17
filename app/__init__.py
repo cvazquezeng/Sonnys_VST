@@ -1,9 +1,8 @@
 # app/__init__.py
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_caching import Cache
-
 import logging
 
 db = SQLAlchemy()
@@ -35,7 +34,8 @@ def create_app(config_class):
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
-    app.register_blueprint(api_bp)  # Ensure this is registered only once
+    app.register_blueprint(api_bp)
+    
 
     @app.after_request
     def add_header(response):

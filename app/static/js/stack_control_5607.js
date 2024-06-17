@@ -110,4 +110,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
         dropdownMenu.dispatchEvent(new Event('change'));
     }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const statusSection = document.getElementById('status-section');
+    
+        fetch('/api/status_5607?selected=5607 Building')
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 503) {
+                        throw new Error("Modbus is offline");
+                    }
+                    throw new Error("Failed to fetch status");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === "offline") {
+                    throw new Error("Modbus is offline");
+                }
+                // Handle data...
+            })
+            .catch(error => {
+                const errorMessage = document.createElement('div');
+                errorMessage.classList.add('error-message');
+                errorMessage.textContent = error.message;
+                statusSection.appendChild(errorMessage);
+            });
+    });
+    
 });

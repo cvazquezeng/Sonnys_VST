@@ -2,6 +2,7 @@
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/stack_status_5607.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/offline.css') }}">
 
 <div class="container">
     <!-- Summary Row -->
@@ -30,7 +31,8 @@
             <li data-color="green">Green</li>
         </ul>
     </div>
-</div>
+
 
 <script src="{{ url_for('static', filename='js/stack_status_5607.js') }}"></script>
+<!-- <script src="{{ url_for('static', filename='js/check_modbus_status.js') }}"></script> -->
 {% endblock %}

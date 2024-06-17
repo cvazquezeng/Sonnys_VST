@@ -10,6 +10,9 @@ The application ensures security and session management using Flask-Login.
 The backend communicates with a stack light system using Modbus TCP, handling light control and status fetching.
 
 
+
+
+chmod +x
 docker-compose down && \
 docker volume prune -f && \
 docker image prune -f && \

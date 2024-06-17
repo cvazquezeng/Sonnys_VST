@@ -5,7 +5,14 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
-
+.error-message {
+    color: red;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid red;
+    margin: 10px 0;
+    text-align: center;
+}
 .container {
     display: flex;
     align-items: flex-start;
