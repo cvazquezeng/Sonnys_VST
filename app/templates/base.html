@@ -10,28 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <style>
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            width: 100%;
-        }
-        .navbar-logo {
-            margin-left: 10px;
-            height: 30px;
-        }
-        .navbar-toggler-centered {
-            margin: 0 auto;
-        }
-        .navbar-text-center {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
 </head>
 <body>
     <div id="body-row">
@@ -44,35 +22,17 @@
                 <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
                     <small>MAIN MENU</small>
                 </li>
-                <a href="{{ url_for('main.dashboard') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fas fa-tachometer-alt fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Dashboard</span>
-                    </div>
-                </a>
-                <a href="{{ url_for('main.home') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+
+                <a href="{{ url_for('main.stack_control_5605') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fas fa-home fa-fw mr-3"></span>
                         <span class="menu-collapsed">Home</span>
                     </div>
-                </a>
-                <a href="{{ url_for('main.profile') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fas fa-user fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Profile</span>
-                    </div>
-                </a>
-                <a href="{{ url_for('main.settings') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
-                    <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fas fa-cogs fa-fw mr-3"></span>
-                        <span class="menu-collapsed">Settings</span>
-                    </div>
-                </a>
                 <!-- Collapsible menu for 5605 Building -->
                 <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
-                        <span class="fas fa-industry fa-fw mr-3"></span>
-                        <span class="menu-collapsed">5605 Building</span>
+                        <span class="fas fa-lightbulb fa-fw mr-3"></span>
+                        <span class="menu-collapsed">Stacklights</span>
                         <span class="fas fa-caret-down ml-auto"></span>
                     </div>
                 </a>
@@ -85,9 +45,27 @@
                         <span class="menu-collapsed">Stack Status</span>
                     </a>
                 </div>
+                <a href="{{ url_for('main.dashboard') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fas fa-tachometer-alt fa-fw mr-3"></span>
+                        <span class="menu-collapsed">Dashboard</span>
+                    </div>
+                </a>
+              
+                <a href="{{ url_for('main.profile') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fas fa-user fa-fw mr-3"></span>
+                        <span class="menu-collapsed">Profile</span>
+                    </div>
+                </a>
+                <a href="{{ url_for('main.settings') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fas fa-cogs fa-fw mr-3"></span>
+                        <span class="menu-collapsed">Settings</span>
+                    </div>
+                </a>
 
-
-                <!-- Collapsible menu for 5607 Building -->
+                <!-- Collapsible menu for 5607 Building
                 <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fas fa-industry fa-fw mr-3"></span>
@@ -95,7 +73,6 @@
                         <span class="fas fa-caret-down ml-auto"></span>
                     </div>
                 </a>
-                <!-- Submenu -->
                 <div id="submenu2" class="collapse sidebar-submenu">
                     <a href="{{ url_for('main.stack_control_5607') }}" class="list-group-item list-group-item-action bg-dark text-white">
                         <span class="menu-collapsed">Stack Control</span>
@@ -104,13 +81,6 @@
                         <span class="menu-collapsed">Stack Status</span>
                     </a>
                 </div>
-
-
-
-
-
-
-
                 <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
                     <small>ACTIONS</small>
                 </li>
@@ -119,22 +89,35 @@
                         <span class="fas fa-sign-out-alt fa-fw mr-3"></span>
                         <span class="menu-collapsed">Logout</span>
                     </div>
-                </a>
-            </ul>
+                </a>-->
+            </ul> 
         </div>
 
         <!-- Main content area -->
         <div class="main-content">
             <!-- Navbar -->
-
             <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
                 <div class="container-fluid d-flex align-items-center justify-content-between">
+                    {% if request.endpoint in ['main.stack_status_5605', 'main.stack_status_5607', 'main.stack_control_5605', 'main.stack_control_5607'] %}
+                    <div class="nav-item nav-buttons">
+                        <button class="nav-button {% if request.endpoint in ['main.stack_status_5605', 'main.stack_control_5605'] %}active{% endif %}" id="nav-button-5605"
+                                data-url-stack-status="{{ url_for('main.stack_status_5605') }}"
+                                data-url-stack-control="{{ url_for('main.stack_control_5605') }}">
+                            5605 Building
+                        </button>
+                        <button class="nav-button {% if request.endpoint in ['main.stack_status_5607', 'main.stack_control_5607'] %}active{% endif %}" id="nav-button-5607"
+                                data-url-stack-status="{{ url_for('main.stack_status_5607') }}"
+                                data-url-stack-control="{{ url_for('main.stack_control_5607') }}">
+                            5607 Building
+                        </button>
+                    </div>
+                    {% endif %}
                     <button class="navbar-toggler navbar-toggler-centered" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="mx-auto d-md-none text-center">
                         <div class="navbar-text-logo d-flex align-items-center justify-content-center">
-                            <span class="navbar-brand mb-0 h1">My App</span>
+                            <span class="navbar-brand mb-0 h1">Stack Lights</span>
                             <a class="navbar-logo ml-2" href="#">
                                 <img src="{{ url_for('static', filename='images/logonobg.png') }}" alt="Logo" style="height: 30px;">
                             </a>
@@ -171,17 +154,14 @@
                     </div>
                 </div>
             </nav>
-            
-            
-            
-            
             <!-- Page content -->
             <div class="container-fluid">
                 {% block content %}{% endblock %}
             </div>
         </div>
     </div>
-
+    <!-- navbar -->
+    <script src="{{ url_for('static', filename='js/navbar-buttons.js') }}"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <!-- Popper.js -->
@@ -190,7 +170,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- Custom JS -->
     <!-- Include the inactivity script -->
-    <script src="{{ url_for('static', filename='js/inactivity-logout.js') }}"></script>    <script>
+    <script src="{{ url_for('static', filename='js/inactivity-logout.js') }}"></script>
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Highlight current page
             const currentUrl = window.location.pathname;

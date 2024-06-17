@@ -20,6 +20,54 @@ body {
     align-items: center; /* Vertically center text */
 }
 
+/* New styles for nav buttons */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    margin-right: 0; /* Align buttons to the left */
+    padding-left: 10px; /* Adjust as needed for spacing */
+}
+
+/* New styles for nav buttons */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    margin-right: auto; /* Align buttons to the left */
+    padding-left: 10px; /* Adjust as needed for spacing */
+}
+
+.nav-button {
+    background: transparent;
+    color: #333; /* Dark text color for visibility */
+    border: none;
+    padding: 15px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1.5;
+    height: 100%; /* Take the full height of the navbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px 4px 0 0; /* Rounded top corners */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-button.active {
+    color: black; /* Text color black for active button */
+    border-left: 12px solid #1c0669; /* White bottom border for active state */
+}
+
+.nav-button:hover {
+    background-color: #44525c; /* Darker blue on hover for unselected state */
+    color: white;
+}
+
+.nav-button i {
+    margin-right: 5px; /* Add space between icon and text */
+}
+
+
 /* Sidebar styles */
 #sidebar-container {
     min-height: 100vh;
