@@ -51,3 +51,7 @@ def stack_status_5607():
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+@main_bp.route('/open_tickets')
+@login_required
+def open_tickets():
+    return render_template('open_tickets.html', title='Open Andon Tickets')

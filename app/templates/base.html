@@ -23,7 +23,7 @@
                     <small>MAIN MENU</small>
                 </li>
 
-                <a href="{{ url_for('main.stack_control_5605') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                <a href="{{ url_for('main.stack_status_5605') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fas fa-home fa-fw mr-3"></span>
                         <span class="menu-collapsed">Home</span>
@@ -45,6 +45,12 @@
                         <span class="menu-collapsed">Stack Status</span>
                     </a>
                 </div>
+                <a href="{{ url_for('main.open_tickets') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-start align-items-center">
+                        <span class="fas fa-ticket-alt fa-fw mr-3"></span>
+                        <span class="menu-collapsed">Tickets</span>
+                    </div>
+                </a>
                 <a href="{{ url_for('main.dashboard') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fas fa-tachometer-alt fa-fw mr-3"></span>
@@ -58,6 +64,7 @@
                         <span class="menu-collapsed">Profile</span>
                     </div>
                 </a>
+                
                 <a href="{{ url_for('main.settings') }}" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-start align-items-center">
                         <span class="fas fa-cogs fa-fw mr-3"></span>
