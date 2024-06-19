@@ -19,18 +19,36 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     const elapsedTime = calculateElapsedTime(event.ts_epoch);
 
+                    // Determine background color based on Andon Status
+                    let statusColor;
+                    switch (properties["Andon Status"]) {
+                        case 'Acknowledged':
+                            statusColor = 'green';
+                            break;
+                        case 'Request Made':
+                            statusColor = 'yellow';
+                            break;
+                        case 'Work Stoppage':
+                            statusColor = 'red';
+                            break;
+                        default:
+                            statusColor = '#4CAF50'; // Default color
+                    }
+
                     square.innerHTML = `
                         <div class="ticket-header" style="background-color: ${event.ui.colour || '#4CAF50'};">
                             <h3>${properties["Line/Machine"] || 'Unknown'}</h3>
+                            <div class="status-sticker" style="background-color: ${statusColor};">
+                                ${properties["Andon Status"] || 'Unknown'}
+                            </div>
                         </div>
                         <div class="ticket-body">
                             <p><strong>ID:</strong> ${event.id}</p>
-                            <p><strong>Status:</strong> ${properties["Andon Status"] || 'Unknown'}</p>
                             <p><strong>Issue Type:</strong> ${properties["Issue Type"] || 'Unknown'}</p>
                             <p><strong>Comment:</strong> ${properties["Comment"] || 'None'}</p>
                             <p><strong>Notification Groups:</strong> ${properties["Notification Groups"] || 'Unknown'}</p>
                         </div>
-                        <div class="time-elapsed-container">
+                        <div class="time-elapsed-container" style="background-color: ${event.ui.colour || '#4CAF50'};">
                             <p class="time-elapsed" data-timestamp="${event.ts_epoch}">
                                 <strong>Time Elapsed:</strong> <span>${elapsedTime}</span>
                             </p>

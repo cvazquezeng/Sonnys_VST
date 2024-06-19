@@ -1,7 +1,7 @@
 # initialize_db.py
 
 from app import create_app, db
-from app.models import User
+from app.models import User, Ticket
 import os
 from config_app import DevConfig, ProdConfig
 

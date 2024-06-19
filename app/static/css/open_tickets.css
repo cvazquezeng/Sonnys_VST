@@ -38,11 +38,24 @@ body {
     overflow: hidden;
     transform: translateY(0);
     transition: transform 0.3s ease;
+
+    
+}
+.status-sticker {
+    display: inline-block;
+    padding: 5px 10px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: perspective(1px) translateZ(0);
+    transition: transform 0.3s ease;
+    text-align: center;
+    margin-bottom: 10px;
+    align-self: center; /* Center the sticker within the flex container */
+    white-space: nowrap; /* Prevents text from wrapping */
 }
 
-.status-square:hover {
-    transform: translateY(-5px);
-}
 
 .ticket-header {
     padding: 10px 16px;
@@ -70,15 +83,15 @@ body {
 }
 
 .time-elapsed-container {
-    padding: 8px 12px;
-    background-color: #f9f9f944; /* Lighter background color */
-    border-radius: 6px;
+    padding: 5px 0px;
+    padding-bottom: 0px; /* Additional padding to move text down */
+    background-color: #e4e4e4fa; /* Lighter background color */
+    border-radius: 0px;
     text-align: center;
     font-weight: bold;
-    color: #333;
-    margin-top: 15x;
-    height: 20px; /* Set a fixed height */
-    display: flex;
+    color: #ffffff;
+    margin-top: 15px; /* Fixed typo from 15x to 15px */
+    height: 40px; /* Set a fixed height */
     align-items: center;
     justify-content: center;
 }

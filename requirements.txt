@@ -7,3 +7,6 @@ flask-caching
 pymysql
 cryptography
 python-dotenv
+apscheduler
+requests
+pytz

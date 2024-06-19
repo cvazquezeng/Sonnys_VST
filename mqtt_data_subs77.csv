@@ -1,0 +1,532 @@
+Topic,Payload
+HOST/Andon/71/1390,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1390,
+    ""assetName"" : ""Arches"",
+    ""assetDesc"" : ""Arches Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 273,
+      ""areaDesc"" : ""5605 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5605 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/1383,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1383,
+    ""assetName"" : ""Tire FG"",
+    ""assetDesc"" : ""Tire Finished Good Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 273,
+      ""areaDesc"" : ""5605 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5605 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/1409,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1409,
+    ""assetName"" : ""SP-A"",
+    ""assetDesc"" : ""Small Parts Assembly A - Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 276,
+      ""areaDesc"" : ""5607 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5607 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/1403,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1403,
+    ""assetName"" : ""BLOWER"",
+    ""assetDesc"" : ""Blower Assembly Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 276,
+      ""areaDesc"" : ""5607 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5607 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/1394,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1394,
+    ""assetName"" : ""Brushes-Weights"",
+    ""assetDesc"" : ""Brush & Counterweight Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 273,
+      ""areaDesc"" : ""5605 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5605 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/1384,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1384,
+    ""assetName"" : ""Tire Subs"",
+    ""assetDesc"" : ""Tire Subassembly Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 273,
+      ""areaDesc"" : ""5605 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5605 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/1387,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1387,
+    ""assetName"" : ""Omni FG"",
+    ""assetDesc"" : ""Omni Finished Goods Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 273,
+      ""areaDesc"" : ""5605 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5605 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/1391,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1391,
+    ""assetName"" : ""Top Clean"",
+    ""assetDesc"" : ""Top Clean Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 273,
+      ""areaDesc"" : ""5605 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5605 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/LatestAndonTicket,"{
+  ""ticketDetails"" : {
+    ""andonId"" : 51457,
+    ""startDate"" : 1718782380000,
+    ""startUtc"" : 1718796780000,
+    ""endDate"" : null,
+    ""endUtc"" : null,
+    ""start"" : ""2024-06-19"",
+    ""end"" : null,
+    ""andonLine"" : ""Brushes-Weights"",
+    ""andonLineId"" : 1394,
+    ""andonStatus"" : ""Work Stoppage"",
+    ""andonStatusId"" : 425,
+    ""currentStatus"" : ""Work Stoppage"",
+    ""currentStatusId"" : 425,
+    ""colour"" : ""#D94747"",
+    ""description"" : null,
+    ""type"" : null,
+    ""timeElapsed"" : 0,
+    ""assetId"" : 1394,
+    ""assetName"" : ""Brushes-Weights"",
+    ""placeholder1"" : ""Brushes-Weights"",
+    ""placeholder2"" : ""Material"",
+    ""placeholder3"" : ""Materials 5605"",
+    ""placeholder4"" : ""Work Stoppage"",
+    ""differenceMap"" : {
+      ""Second"" : 0,
+      ""Hour"" : 0,
+      ""Day"" : 0,
+      ""Minut"" : 3
+    }
+  },
+  ""timestamp"" : 1718796960000
+}"
+HOST/Andon/71/1392,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1392,
+    ""assetName"" : ""Wraps"",
+    ""assetDesc"" : ""Wrap Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 273,
+      ""areaDesc"" : ""5605 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5605 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/AndonRefreshTimestamp,1718797875000
+HOST/Andon/71/1410,"[ {
+  ""currentJob"" : null,
+  ""shift"" : null,
+  ""assetView"" : {
+    ""id"" : 1410,
+    ""assetName"" : ""SP-B"",
+    ""assetDesc"" : ""Small Parts Assembly B Workcenter"",
+    ""assetClassView"" : null,
+    ""areaView"" : {
+      ""id"" : 276,
+      ""areaDesc"" : ""5607 Assembly Workcenters"",
+      ""isActive"" : 1,
+      ""areaName"" : ""5607 Assembly"",
+      ""companyId"" : 71,
+      ""editImage"" : null,
+      ""deleteImage"" : null,
+      ""company"" : {
+        ""id"" : 71,
+        ""location"" : ""Chicago"",
+        ""companyName"" : ""SonnyDirect""
+      }
+    },
+    ""declareMaxUnit"" : 0,
+    ""cycleTime"" : 0.0,
+    ""operationView"" : null,
+    ""companyView"" : {
+      ""id"" : 71,
+      ""location"" : ""Chicago"",
+      ""companyName"" : ""SonnyDirect""
+    },
+    ""isActive"" : 1,
+    ""editImage"" : ""resources/images/edit_record.svg"",
+    ""deleteImage"" : ""resources/images/trash_record.svg""
+  },
+  ""isAndon"" : false,
+  ""isJobAssociated"" : false,
+  ""cycleTime"" : 0.0,
+  ""cycleTimeUnit"" : """",
+  ""elapsedTime"" : null,
+  ""andonData"" : null,
+  ""target"" : 0,
+  ""taktTicketTimerStart"" : null,
+  ""taktTicketTimerElapsedTime"" : null,
+  ""jobLastRunningStateTimerStart"" : null,
+  ""jobRunningStateElapsedTime"" : null,
+  ""passed"" : 0,
+  ""failed"" : 0
+} ]"
+HOST/Andon/71/HeartBeat,1718800127502
+HOST/Andon/71/HeartBeat,1718800138749
+HOST/Andon/71/HeartBeat,1718800168748
+HOST/Andon/71/HeartBeat,1718800180780
+HOST/Andon/71/HeartBeat,1718800187502
+HOST/Andon/71/HeartBeat,1718800198746
+HOST/Andon/71/HeartBeat,1718800219370
+HOST/Andon/71/HeartBeat,1718800228747
+HOST/Andon/71/HeartBeat,1718800239493
+HOST/Andon/71/HeartBeat,1718800240781
+HOST/Andon/71/HeartBeat,1718800258752
+HOST/Andon/71/HeartBeat,1718800269488
+HOST/Andon/71/HeartBeat,1718800288754
+HOST/Andon/71/HeartBeat,1718800300782
+HOST/Andon/71/HeartBeat,1718800307502
+HOST/Andon/71/HeartBeat,1718800318748

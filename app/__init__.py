@@ -3,11 +3,13 @@ from flask import Flask, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_caching import Cache
+from apscheduler.schedulers.background import BackgroundScheduler
 import logging
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 cache = Cache()
+scheduler = BackgroundScheduler()
 
 def create_app(config_class):
     app = Flask(__name__)
@@ -22,29 +24,39 @@ def create_app(config_class):
     # Setup logging
     logging.basicConfig(level=logging.DEBUG)
 
-    from .models import User
+    with app.app_context():
+        from .models import User, Ticket  # Import models after app context is set
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
+        @login_manager.user_loader
+        def load_user(user_id):
+            return User.query.get(int(user_id))
 
-    from .routes.auth import auth_bp
-    from .routes.main import main_bp
-    from .routes.api import api_bp
+        from .routes.auth import auth_bp
+        from .routes.main import main_bp
+        from .routes.api import api_bp
 
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(main_bp)
-    app.register_blueprint(api_bp)
+        app.register_blueprint(auth_bp)
+        app.register_blueprint(main_bp)
+        app.register_blueprint(api_bp)
+
+        @app.after_request
+        def add_header(response):
+            response.cache_control.no_store = True
+            return response
+
+        @app.route('/static/<path:filename>')
+        @cache.cached(timeout=3600)
+        def cached_static(filename):
+            return send_from_directory('static', filename)
+
+    # Schedule the save_tickets job
+    from .tasks import save_tickets
+    scheduler.add_job(func=save_tickets, args=[app], trigger="interval", seconds=30, id="save_tickets", replace_existing=True)
     
-
-    @app.after_request
-    def add_header(response):
-        response.cache_control.no_store = True
-        return response
-
-    @app.route('/static/<path:filename>')
-    @cache.cached(timeout=3600)
-    def cached_static(filename):
-        return send_from_directory('static', filename)
-
+    # Schedule the update_tickets job
+    from .tasks import update_tickets
+    scheduler.add_job(func=update_tickets, args=[app], trigger="interval", seconds=600, id="update_tickets", replace_existing=True)
+    
+    scheduler.start()
+    
     return app

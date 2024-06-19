@@ -270,3 +270,21 @@ body {
         margin-right: auto; /* Align to the left */
     }
 }
+/* DASHBOARD */
+.form-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-inline .form-group {
+    margin-right: 10px;
+}
+
+.form-inline .form-control {
+    min-width: 200px;
+}
+
+.form-inline .btn {
+    min-width: 100px;
+}
