@@ -8,9 +8,10 @@ from config_app import DevConfig, ProdConfig
 load_dotenv()  # Load environment variables from .env file
 
 config_class = DevConfig if os.environ.get('FLASK_ENV') == 'development' else ProdConfig
-
 app = create_app(config_class)
 migrate = Migrate(app, db)
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5010)
+@app.cli.command("init_db")
+def init_db():
+    db.create_all()
+    print("Initialized the database")

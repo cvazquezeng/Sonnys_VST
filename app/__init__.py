@@ -4,9 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_caching import Cache
 from apscheduler.schedulers.background import BackgroundScheduler
+from flask_migrate import Migrate
+
 import logging
 
 db = SQLAlchemy()
+migrate = Migrate()
 login_manager = LoginManager()
 cache = Cache()
 scheduler = BackgroundScheduler()
@@ -17,6 +20,7 @@ def create_app(config_class):
 
     # Initialize extensions
     db.init_app(app)
+    
     login_manager.init_app(app)
     cache.init_app(app, config={'CACHE_TYPE': 'simple'})
     login_manager.login_view = 'auth.login'
@@ -55,7 +59,7 @@ def create_app(config_class):
     
     # Schedule the update_tickets job
     from .tasks import update_tickets
-    scheduler.add_job(func=update_tickets, args=[app], trigger="interval", seconds=600, id="update_tickets", replace_existing=True)
+    scheduler.add_job(func=update_tickets, args=[app], trigger="interval", seconds=720, id="update_tickets", replace_existing=True)
     
     scheduler.start()
     

@@ -43,3 +43,14 @@ class Ticket(db.Model):
         self.closed_at = closed_at
         self.request_made_at = request_made_at
         self.acknowledged_at = acknowledged_at
+        
+class ClosedTicket(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ticket_id = db.Column(db.Integer, nullable=False, unique=True)
+    line_machine = db.Column(db.String(100), nullable=False)
+    request_made_at = db.Column(db.DateTime, nullable=True)
+    acknowledged_at = db.Column(db.DateTime, nullable=True)
+    closed_at = db.Column(db.DateTime, nullable=True)
+    issue_type = db.Column(db.String(100), nullable=True)
+    comment = db.Column(db.Text, nullable=True)
+    notification_groups = db.Column(db.String(255), nullable=True)

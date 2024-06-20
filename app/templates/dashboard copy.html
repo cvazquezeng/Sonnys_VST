@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Dashboard</h2>
+    <form method="get" action="{{ url_for('main.dashboard') }}" class="form-inline mb-3">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="filter_by" class="mr-2">Filter By:</label>
+            <select id="filter_by" name="filter_by" class="form-control">
+                <option value="line_machine" {% if filter_by == 'line_machine' %}selected{% endif %}>Line Machine</option>
+                <option value="issue_type" {% if filter_by == 'issue_type' %}selected{% endif %}>Issue Type</option>
+            </select>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="filter_value" class="mr-2">Filter Value:</label>
+            <select id="filter_value" name="filter_value" class="form-control">
+                {% if filter_by == 'line_machine' %}
+                    {% for line_machine in line_machines %}
+                        <option value="{{ line_machine[0] }}" {% if filter_value == line_machine[0] %}selected{% endif %}>{{ line_machine[0] }}</option>
+                    {% endfor %}
+                {% elif filter_by == 'issue_type' %}
+                    {% for issue_type in issue_types %}
+                        <option value="{{ issue_type[0] }}" {% if filter_value == issue_type[0] %}selected{% endif %}>{{ issue_type[0] }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Filter</button>
+    </form>
+
+    <div style="width: 75%; margin: auto;">
+        <canvas id="responseTimeChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var labels = JSON.parse('{{ labels | tojson | safe }}');
+        var data = JSON.parse('{{ data | tojson | safe }}');
+        initializeChart(labels, data);
+    });
+</script>
+{% endblock %}
+.

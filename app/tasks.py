@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import requests
 from flask import current_app
-from app.models import Ticket, db
+from app.models import Ticket, db, ClosedTicket
 import json
 from .utils import convert_utc_to_est  # Import the function
 
@@ -11,6 +11,7 @@ def save_tickets(app):
         fetch_active_tickets()
       
 def update_tickets(app):
+    with app.app_context():
         fetch_closed_tickets()
         
 def fetch_active_tickets():
@@ -70,68 +71,85 @@ def fetch_active_tickets():
 
 
 def fetch_closed_tickets():
-    today = datetime.utcnow()
-    seven_days_ago = today - timedelta(days=10)
-
-    today_str = today.strftime('%b%%20%d,%%20%Y%%20%I:%M%%20%p')
-    seven_days_ago_str = seven_days_ago.strftime('%b%%20%d,%%20%Y%%20%I:%M%%20%p')
-
-    print(f"Fetching closed tickets from {seven_days_ago_str} to {today_str}")
-
-    url_closed = (
-        f'https://andon.sageclarity.com/AndonCenter/getAndonEntryDataTable.do?lineIds=1383,1384,1385,1386,1387,1388,1389,1390,1391,1392,1393,1394,1395,1396,1397,1398,1399,1400,1401,1402,1403,1404,1405,1406,1407,1408,1409,1410,1411,1412,1413,1414,1415,1416,1417,1419,1420,1421,1422,1423,1424,1425,1426,1427,1428,1429,1430,1431,1437,1438,1440,1442,1444,1446,1448,1450,1452,1454,1455,1456,1457,1459,1461,1463,1572,1573,1574,1575,1576,1577,1578,1579,1580'
-        f'&currentDate={today.strftime("%Y-%m-%d")}'
-        f'&companyId=71&pageNumber=1&statusIds=421,422,423,424,425,426&order=0&rowsPerPage=5125'
-        f'&filterFromDate={seven_days_ago_str}&filterToDate={today_str}&_dc=1718803882854'
-    )
-
-    response_closed = requests.get(url_closed)
+    url = 'https://andon.sageclarity.com/AndonCenter/getAndonEntryDataTable.do?lineIds=1383,1384,1385,1386,1387,1388,1389,1390,1391,1392,1393,1394,1395,1396,1397,1398,1399,1400,1401,1402,1403,1404,1405,1406,1407,1408,1409,1410,1411,1412,1413,1414,1415,1416,1417,1419,1420,1421,1423,1424,1425,1426,1427,1428,1429,1430,1431,1437,1438,1440,1442,1444,1446,1448,1450,1452,1454,1455,1456,1457,1459,1461,1463,1572,1573,1574,1575,1576,1577,1578,1579,1580&currentDate=2024-06-20&companyId=71&pageNumber=1&statusIds=421,422,423,424,425,426&order=0&rowsPerPage=5125&filterFromDate=Jun%2010,%202024%2012:05%20AM&filterToDate=Jun%2020,%202024%2012:05%20AM&_dc=1718803882854'
+    response = requests.get(url)
     
-    #print(f"Request URL: {url_closed}")
-    print(f"Response status code: {response_closed.status_code}")
-    if response_closed.status_code == 200:
-        data_closed = response_closed.json()
-        ##print(f"Response JSON: {json.dumps(data_closed, indent=2)}")
+    if response.status_code == 200:
+        data = response.json()
         
-        data_closed_entries = data_closed.get('Data', [])
-        #print(f"Closed ticket data entries: {data_closed_entries}")
+        for item in data['Data']:
+            ticket_id = item.get('andonEntryMasterId')
+            line_machine = item.get('line')
+            request_made_at = datetime.fromtimestamp(item['startUtc'] / 1000) if item['startUtc'] else None
+            acknowledged_at = None
+            closed_at = None
+            issue_type = None
+            comment = None
 
-        closed_ticket_ids = {item['andonEntryMasterId'] for item in data_closed_entries}
-        #print(f"Closed ticket IDs: {closed_ticket_ids}")
+            # Parse issue_type and comment from nonMandatoryFields
+            for field in item.get('nonMandatoryFields', []):
+                if field.get('fieldId') == 1137:  # Assuming 1137 is the fieldId for issue_type
+                    issue_type = field.get('fieldValue')
+                elif field.get('fieldId') == 1228:  # Assuming 1228 is the fieldId for comment
+                    comment = field.get('fieldValue')
 
-        for item in data_closed_entries:
-            ticket_id = item['andonEntryMasterId']
-            closed_timestamp = None
-            acknowledged_timestamp = None
-            request_made_timestamp = None
-
+            # Parse transaction dates
             for transaction in item.get('transactionMasterViewList', []):
-                status = transaction.get('status')
-                transaction_date = transaction.get('transactionUtc')
-                if status == "Closed":
-                    closed_timestamp = transaction_date
-                elif status == "Acknowledged":
-                    acknowledged_timestamp = transaction_date
-                elif status == "Request Made":
-                    request_made_timestamp = transaction_date
+                if transaction['statusId'] == 421:  # Request Made
+                    if transaction['transactionUtc']:
+                        request_made_at = datetime.fromtimestamp(transaction['transactionUtc'] / 1000)
+                elif transaction['statusId'] == 422:  # Acknowledged
+                    if transaction['transactionUtc']:
+                        acknowledged_at = datetime.fromtimestamp(transaction['transactionUtc'] / 1000)
+                elif transaction['statusId'] == 423:  # Closed
+                    if transaction['transactionUtc']:
+                        closed_at = datetime.fromtimestamp(transaction['transactionUtc'] / 1000)
 
-            existing_ticket = Ticket.query.filter_by(ticket_id=ticket_id).first()
-            if existing_ticket:
-                if closed_timestamp and not existing_ticket.closed_at:
-                    closed_timestamp_dt = datetime.utcfromtimestamp(closed_timestamp / 1000)
-                    existing_ticket.closed_at = convert_utc_to_est(closed_timestamp_dt)  # Convert to EST
-                if acknowledged_timestamp and not existing_ticket.acknowledged_at:
-                    acknowledged_timestamp_dt = datetime.utcfromtimestamp(acknowledged_timestamp / 1000)
-                    existing_ticket.acknowledged_at = convert_utc_to_est(acknowledged_timestamp_dt)  # Convert to EST
-                if request_made_timestamp and not existing_ticket.request_made_at:
-                    request_made_timestamp_dt = datetime.utcfromtimestamp(request_made_timestamp / 1000)
-                    existing_ticket.request_made_at = convert_utc_to_est(request_made_timestamp_dt)  # Convert to EST
-                try:
-                    db.session.commit()
-                except Exception as e:
-                    db.session.rollback()
-                    print(f"Error committing ticket {ticket_id}: {e}")
-            else:
-                print(f"No existing ticket found for ID: {ticket_id}")
+            notification_groups = item.get('notificationGroupNames')
+            if notification_groups:
+                notification_groups = notification_groups[:255]  # Truncate to fit within column length
+
+            try:
+                # Insert into ClosedTicket
+                existing_ticket = ClosedTicket.query.filter_by(ticket_id=ticket_id).first()
+                if not existing_ticket:
+                    new_ticket = ClosedTicket(
+                        ticket_id=ticket_id,
+                        line_machine=line_machine,
+                        request_made_at=request_made_at,
+                        acknowledged_at=acknowledged_at,
+                        closed_at=closed_at,
+                        issue_type=issue_type,
+                        comment=comment,
+                        notification_groups=notification_groups
+                    )
+                    db.session.add(new_ticket)
+                    print(f"New ticket {ticket_id} added to the database.")
+                else:
+                    if (
+                        existing_ticket.line_machine != line_machine or
+                        existing_ticket.request_made_at != request_made_at or
+                        existing_ticket.acknowledged_at != acknowledged_at or
+                        existing_ticket.closed_at != closed_at or
+                        existing_ticket.issue_type != issue_type or
+                        existing_ticket.comment != comment or
+                        existing_ticket.notification_groups != notification_groups
+                    ):
+                        existing_ticket.line_machine = line_machine
+                        existing_ticket.request_made_at = request_made_at
+                        existing_ticket.acknowledged_at = acknowledged_at
+                        existing_ticket.closed_at = closed_at
+                        existing_ticket.issue_type = issue_type
+                        existing_ticket.comment = comment
+                        existing_ticket.notification_groups = notification_groups
+                        db.session.add(existing_ticket)
+                        print(f"Existing ticket {ticket_id} updated in the database.")
+                    else:
+                        print(f"No changes for ticket {ticket_id}. Skipping update.")
+
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print(f"Error committing new ticket {ticket_id}: {e}")
     else:
-        print(f"Failed to fetch closed tickets, status code: {response_closed.status_code}")
+        print(f"Failed to fetch closed tickets, status code: {response.status_code}")
