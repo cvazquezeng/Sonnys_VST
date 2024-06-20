@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard 2{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard2.css') }}">
+
+<div class="container">
+    <h1 class="mt-4">Stats Summary</h1>
+    <div class="d-flex justify-content-between align-items-center my-3">
+        <div class="btn-group">
+            <button class="btn btn-outline-primary filter-button" data-range="today">Today</button>
+            <button class="btn btn-outline-primary filter-button" data-range="yesterday">Yesterday</button>
+            <button class="btn btn-outline-primary filter-button" data-range="24hours">Last 24 Hours</button>
+            <button class="btn btn-outline-primary filter-button" data-range="7days">Last 7 Days</button>
+            <button class="btn btn-outline-primary filter-button" data-range="30days">Last 30 Days</button>
+        </div>
+        <div class="range-display text-primary">
+            <h5>Selected Range: {{ range_display }}</h5>
+        </div>
+    </div>
+    <div class="summary-table">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Tickets Opened</th>
+                    <th>Tickets Closed</th>
+                    <th>Average Time to Close Ticket</th>
+                    <th>Average Time to Acknowledge Ticket</th>
+                </tr>
+            </thead>
+            <tbody id="summary-data">
+                <tr>
+                    <td>{{ tickets_opened }}</td>
+                    <td>{{ tickets_closed }}</td>
+                    <td>{{ average_time_to_close }}</td>
+                    <td>{{ average_time_to_acknowledge }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard2.js') }}"></script>
+{% endblock %}

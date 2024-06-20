@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         return acc;
                     }, {});
 
-                    const elapsedTime = calculateElapsedTime(event.ts_epoch);
+                    const isClosed = properties["Andon Status"] === 'Closed';
+                    const closedTimestamp = isClosed ? new Date(properties["Closed At"]).getTime() : null;
+                    const elapsedTime = isClosed ? calculateElapsedTime(event.ts_epoch, closedTimestamp) : calculateElapsedTime(event.ts_epoch);
 
                     // Determine background color based on Andon Status
                     let statusColor;
@@ -29,8 +31,14 @@ document.addEventListener("DOMContentLoaded", function() {
                             statusColor = 'yellow';
                             break;
                         case 'Work Stoppage':
-                            statusColor = 'red';
+                            statusColor = 'orange';
                             break;
+                        case 'Closed':
+                            statusColor = 'grey';
+                            break;
+                        case 'Issue Escalated':
+                            statusColor = 'red';
+                            break;    
                         default:
                             statusColor = '#4CAF50'; // Default color
                     }
@@ -49,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <p><strong>Notification Groups:</strong> ${properties["Notification Groups"] || 'Unknown'}</p>
                         </div>
                         <div class="time-elapsed-container" style="background-color: ${event.ui.colour || '#4CAF50'};">
-                            <p class="time-elapsed" data-timestamp="${event.ts_epoch}">
+                            <p class="time-elapsed" data-timestamp="${event.ts_epoch}" data-closed-timestamp="${closedTimestamp}">
                                 <strong>Time Elapsed:</strong> <span>${elapsedTime}</span>
                             </p>
                         </div>
@@ -60,9 +68,9 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(error => console.error('Error fetching data:', error));
     }
 
-    function calculateElapsedTime(timestamp) {
-        const now = Date.now();
-        const elapsed = now - timestamp;
+    function calculateElapsedTime(openTimestamp, closeTimestamp = null) {
+        const now = closeTimestamp ? closeTimestamp : Date.now();
+        const elapsed = now - openTimestamp;
         const hours = Math.floor(elapsed / (1000 * 60 * 60));
         const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
@@ -72,8 +80,9 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateElapsedTimes() {
         const timeElements = document.querySelectorAll('.time-elapsed span');
         timeElements.forEach(element => {
-            const timestamp = element.closest('.time-elapsed').getAttribute('data-timestamp');
-            element.textContent = calculateElapsedTime(parseInt(timestamp));
+            const timestamp = parseInt(element.closest('.time-elapsed').getAttribute('data-timestamp'));
+            const closedTimestamp = element.closest('.time-elapsed').getAttribute('data-closed-timestamp');
+            element.textContent = calculateElapsedTime(timestamp, closedTimestamp ? parseInt(closedTimestamp) : null);
         });
     }
 

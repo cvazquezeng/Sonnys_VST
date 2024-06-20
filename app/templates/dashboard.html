@@ -1,46 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Dashboard</h2>
-    <form method="get" action="{{ url_for('main.dashboard') }}" class="form-inline mb-3">
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="filter_by" class="mr-2">Filter By:</label>
-            <select id="filter_by" name="filter_by" class="form-control">
-                <option value="line_machine" {% if filter_by == 'line_machine' %}selected{% endif %}>Line Machine</option>
-                <option value="issue_type" {% if filter_by == 'issue_type' %}selected{% endif %}>Issue Type</option>
-            </select>
-        </div>
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="filter_value" class="mr-2">Filter Value:</label>
-            <select id="filter_value" name="filter_value" class="form-control">
-                {% if filter_by == 'line_machine' %}
-                    {% for line_machine in line_machines %}
-                        <option value="{{ line_machine[0] }}" {% if filter_value == line_machine[0] %}selected{% endif %}>{{ line_machine[0] }}</option>
-                    {% endfor %}
-                {% elif filter_by == 'issue_type' %}
-                    {% for issue_type in issue_types %}
-                        <option value="{{ issue_type[0] }}" {% if filter_value == issue_type[0] %}selected{% endif %}>{{ issue_type[0] }}</option>
-                    {% endfor %}
-                {% endif %}
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary mb-2">Filter</button>
-    </form>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}">
 
-    <div style="width: 75%; margin: auto;">
-        <canvas id="responseTimeChart"></canvas>
-    </div>
+<div class="main-content">
+    <h2>Closed Tickets</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ticket ID</th>
+                <th>Line Machine</th>
+                <th>Issue Type</th>
+                <th>Comment</th>
+                <th>Request Made At</th>
+                <th>Acknowledged At</th>
+                <th>Closed At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in closed_tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.ticket_id }}</td>
+                <td>{{ ticket.line_machine }}</td>
+                <td>{{ ticket.issue_type }}</td>
+                <td>{{ ticket.comment }}</td>
+                <td>{{ ticket.request_made_at.strftime('%B/%d/%y %I:%M:%S %p') if ticket.request_made_at else 'N/A' }}</td>
+                <td>{{ ticket.acknowledged_at.strftime('%B/%d/%y %I:%M:%S %p') if ticket.acknowledged_at else 'N/A' }}</td>
+                <td>{{ ticket.closed_at.strftime('%B/%d/%y %I:%M:%S %p') if ticket.closed_at else 'N/A' }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8">No closed tickets found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var labels = JSON.parse('{{ labels | tojson | safe }}');
-        var data = JSON.parse('{{ data | tojson | safe }}');
-        initializeChart(labels, data);
-    });
-</script>
 {% endblock %}
-.

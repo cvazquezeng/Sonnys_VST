@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const endpoint = window.location.pathname;
 
+    // Handling stack status and control buttons
     const btn5605 = document.getElementById("nav-button-5605");
     const btn5607 = document.getElementById("nav-button-5607");
 
@@ -23,6 +24,24 @@ document.addEventListener("DOMContentLoaded", function() {
             };
             btn5607.onclick = function() {
                 window.location.href = urlStackControl5607;
+            };
+        }
+    }
+
+    // Handling dashboard buttons
+    const btnDashboard = document.getElementById("nav-button-dashboard");
+    const btnDashboard1 = document.getElementById("nav-button-dashboard1");
+
+    if (btnDashboard && btnDashboard1) {
+        const urlDashboard = btnDashboard.getAttribute('data-url-stack-AllTickets');
+        const urlDashboard1 = btnDashboard1.getAttribute('data-url-stack-ticketStats');
+
+        if (endpoint.includes("dashboard")) {
+            btnDashboard.onclick = function() {
+                window.location.href = urlDashboard;
+            };
+            btnDashboard1.onclick = function() {
+                window.location.href = urlDashboard1;
             };
         }
     }

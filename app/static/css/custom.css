@@ -1,0 +1,131 @@
+/* Ensure there are no default margins or paddings */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* Adjust the main content area for the dashboard */
+.main-content {
+    margin-top: 30px !important; /* Force the padding to be applied */
+    margin-left: 100px; /* Adjust based on sidebar width */
+    box-sizing: border-box;
+    width: calc(100% - 130px); /* Adjust based on sidebar width */
+    transition: margin-left 0.3s, width 0.3s;
+    overflow: auto; /* Ensure content is scrollable if necessary */
+    font-size: 1.0vw; /* Use viewport width units for responsive text size */
+}
+
+/* Table styles for the dashboard */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.0vw; /* Use viewport width units for responsive text size */
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap; /* Prevent line breaks */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    color: rgb(0, 0, 0); /* Text color for verification */
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+    max-width: 150px; /* Set a max-width for each cell */
+}
+
+/* Form styles for the dashboard */
+.form-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2vw; /* Use viewport width units for responsive text size */
+}
+
+.form-inline .form-group {
+    margin-right: 10px;
+}
+
+.form-inline .form-control {
+    min-width: 200px;
+}
+
+.form-inline .btn {
+    min-width: 100px;
+}
+
+/* Ensure the navbar retains its width and handles overflow */
+.navbar {
+    background-color: white !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* 3D-like border */
+    z-index: 1030 !important; /* Ensure navbar is on top */
+    width: calc(100% - 230px); /* Full width minus sidebar width */
+    position: fixed; /* Use fixed positioning */
+    top: 0; /* Position at the top */
+    left: 230px; /* Position to the right of the sidebar */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    white-space: nowrap; /* Prevent line breaks */
+    transition: width 0.3s, left 0.3s; /* Smooth transition for width and left */
+}
+
+/* Ensure the parent container uses Flexbox */
+.navbar-container {
+    display: flex;
+    justify-content: center; /* Center items */
+    align-items: center;
+    width: 100%; /* Ensure full width */
+    padding: 10px 20px; /* Adjust padding as needed */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+    .main-content {
+        margin-left: 200px; /* Adjust based on sidebar width */
+        width: calc(100% - 200px); /* Adjust based on sidebar width */
+        font-size: 1.5vw; /* Adjust font size */
+    }
+    .navbar {
+        width: calc(100% - 200px); /* Adjust based on sidebar width */
+        left: 200px; /* Adjust left position based on sidebar width */
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 150px; /* Adjust based on sidebar width */
+        width: calc(100% - 150px); /* Adjust based on sidebar width */
+        font-size: 2vw; /* Adjust font size */
+    }
+    .navbar {
+        width: calc(100% - 150px); /* Adjust based on sidebar width */
+        left: 150px; /* Adjust left position based on sidebar width */
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0; /* Remove sidebar margin */
+        width: 100%; /* Full width */
+        padding: 10px; /* Reduce padding */
+        font-size: 2.5vw; /* Adjust font size */
+    }
+    .navbar {
+        position: static; /* Change to static for smaller screens */
+        width: 100%; /* Full width */
+        margin-bottom: 10px; /* Add margin to push content down */
+        left: 0; /* Reset left position */
+    }
+    #sidebar-container {
+        display: none; /* Hide sidebar on small screens */
+    }
+}

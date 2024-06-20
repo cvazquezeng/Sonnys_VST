@@ -4,6 +4,8 @@ body {
     display: flex;
     flex-direction: column;
     padding-top: 0; /* Remove top padding for the fixed navbar */
+    font-family: Arial, sans-serif;
+    font-size: 1vw; /* Base font size using viewport width */
 }
 
 .navbar {
@@ -12,20 +14,18 @@ body {
     z-index: 1030; /* Ensure navbar is on top */
     width: 100%; /* Ensure navbar takes full width */
     position: relative; /* Adjust position to manage z-index properly */
+    transition: width 0.3s, height 0.3s; /* Smooth transition for width and height */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    white-space: nowrap; /* Prevent line breaks */
+    font-size: 1vw; /* Base font size using viewport width */
 }
 
 .navbar-nav .nav-item .nav-link {
     color: #000; /* Ensure the navbar links are black for contrast */
     display: flex;
     align-items: center; /* Vertically center text */
-}
-
-/* New styles for nav buttons */
-.nav-buttons {
-    display: flex;
-    align-items: center;
-    margin-right: 0; /* Align buttons to the left */
-    padding-left: 10px; /* Adjust as needed for spacing */
+    font-size: 1vw; /* Base font size using viewport width */
 }
 
 /* New styles for nav buttons */
@@ -43,7 +43,7 @@ body {
     padding: 15px 15px;
     margin: 0 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1vw; /* Base font size using viewport width */
     line-height: 1.5;
     height: 100%; /* Take the full height of the navbar */
     display: flex;
@@ -66,7 +66,6 @@ body {
 .nav-button i {
     margin-right: 5px; /* Add space between icon and text */
 }
-
 
 /* Sidebar styles */
 #sidebar-container {
@@ -114,6 +113,7 @@ body {
     padding: 20px;
     margin-left: 230px; /* Adjust based on sidebar width */
     transition: margin-left 0.3s;
+    font-size: 1vw; /* Base font size using viewport width */
 }
 
 .full-width {
@@ -170,7 +170,6 @@ body {
     align-items: center; /* Vertically center text */
     font-weight: bold; /* Make text bold */
     line-height: 1; /* Adjust line height */
-    font-weight: bold; /* Make text bold */
 }
 
 .sidebar-separator {
@@ -219,6 +218,7 @@ body {
         right: 0;
         background-color: white;
         z-index: 1031; /* Ensure it appears above content */
+        font-size: 2.5vw; /* Adjust font size for smaller screens */
     }
 
     .navbar .navbar-nav .nav-item {
@@ -233,6 +233,7 @@ body {
     .navbar {
         width: 100%;
         z-index: 1030; /* Lower the z-index for mobile view */
+        font-size: 2.5vw; /* Adjust font size for smaller screens */
     }
 
     #sidebar-container {
@@ -241,6 +242,7 @@ body {
 
     .main-content {
         margin-left: 0;
+        font-size: 2.5vw; /* Adjust font size for smaller screens */
     }
 
     .navbar-text-logo {
@@ -270,11 +272,13 @@ body {
         margin-right: auto; /* Align to the left */
     }
 }
+
 /* DASHBOARD */
 .form-inline {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1vw; /* Base font size using viewport width */
 }
 
 .form-inline .form-group {
@@ -287,4 +291,28 @@ body {
 
 .form-inline .btn {
     min-width: 100px;
+}
+
+/* Additional responsive adjustments for larger screens */
+@media (min-width: 768px) and (max-width: 1200px) {
+    body,
+    .navbar,
+    .navbar-nav .nav-item .nav-link,
+    .nav-button,
+    .main-content,
+    .form-inline {
+        font-size: 1.2vw; /* Adjust font size */
+    }
+}
+
+/* Additional responsive adjustments for smaller screens */
+@media (max-width: 767.98px) {
+    body,
+    .navbar,
+    .navbar-nav .nav-item .nav-link,
+    .nav-button,
+    .main-content,
+    .form-inline {
+        font-size: 2.5vw; /* Adjust font size */
+    }
 }

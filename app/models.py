@@ -3,6 +3,8 @@ from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+import pytz
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -44,7 +46,14 @@ class Ticket(db.Model):
         self.request_made_at = request_made_at
         self.acknowledged_at = acknowledged_at
         
+    def time_elapsed(self):
+        if self.andon_status.lower() == 'closed' and self.closed_at:
+            return self.closed_at - self.timestamp
+        return None
+        
+
 class ClosedTicket(db.Model):
+    __tablename__ = 'closed_ticket'
     id = db.Column(db.Integer, primary_key=True)
     ticket_id = db.Column(db.Integer, nullable=False, unique=True)
     line_machine = db.Column(db.String(100), nullable=False)
@@ -54,3 +63,23 @@ class ClosedTicket(db.Model):
     issue_type = db.Column(db.String(100), nullable=True)
     comment = db.Column(db.Text, nullable=True)
     notification_groups = db.Column(db.String(255), nullable=True)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'ticket_id': self.ticket_id,
+            'line_machine': self.line_machine,
+            'issue_type': self.issue_type,
+            'comment': self.comment,
+            'request_made_at': self.convert_to_timezone(self.request_made_at),
+            'acknowledged_at': self.convert_to_timezone(self.acknowledged_at),
+            'closed_at': self.convert_to_timezone(self.closed_at)
+        }
+
+    @staticmethod
+    def convert_to_timezone(utc_dt):
+        if utc_dt:
+            utc_dt = utc_dt.replace(tzinfo=pytz.UTC)
+            eastern = utc_dt.astimezone(pytz.timezone('America/New_York'))
+            return eastern
+        return None

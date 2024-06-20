@@ -10,3 +10,4 @@ python-dotenv
 apscheduler
 requests
 pytz
+flask_migrate

@@ -1,10 +1,14 @@
-from flask import Blueprint, render_template, redirect, url_for, request
-from flask_login import login_required, logout_user, current_user
-from sqlalchemy import func
-from app.models import Ticket
-from sqlalchemy import text  # Add this import
+# main.py
 
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify
+from flask_login import login_required, logout_user, current_user
+from sqlalchemy import func, text
+from app.models import Ticket, ClosedTicket
 from app import db
+from datetime import datetime, timedelta
+import logging
+from app.models import Ticket
+
 
 main_bp = Blueprint('main', __name__)
 
@@ -13,49 +17,6 @@ main_bp = Blueprint('main', __name__)
 @login_required
 def home():
     return redirect(url_for('main.dashboard'))
-
-# app/routes/main.py
-@main_bp.route('/dashboard', methods=['GET'])
-@login_required
-def dashboard():
-    filter_by = request.args.get('filter_by', 'line_machine')
-    filter_value = request.args.get('filter_value', None)
-
-    base_query = """
-    SELECT
-        {filter_column},
-        AVG(TIMESTAMPDIFF(SECOND, request_made_at, acknowledged_at)) AS avg_response_time
-    FROM ticket
-    WHERE acknowledged_at IS NOT NULL
-    """
-
-    if filter_value:
-        base_query += f" AND {filter_by} = :filter_value"
-    
-    base_query += f" GROUP BY {filter_by};"
-
-    filter_column = 'line_machine' if filter_by == 'line_machine' else 'issue_type'
-
-    response_times_query = base_query.format(filter_column=filter_column)
-
-    with db.engine.connect() as connection:
-        result = connection.execute(text(response_times_query), {'filter_value': filter_value})
-        response_times = result.fetchall()
-
-    labels = [row[0] for row in response_times]
-    data = [row[1] for row in response_times]
-
-    # Get unique line_machines and issue_types for the dropdowns
-    line_machines_query = "SELECT DISTINCT line_machine FROM ticket WHERE line_machine IS NOT NULL;"
-    issue_types_query = "SELECT DISTINCT issue_type FROM ticket WHERE issue_type IS NOT NULL;"
-
-    with db.engine.connect() as connection:
-        line_machines = connection.execute(text(line_machines_query)).fetchall()
-        issue_types = connection.execute(text(issue_types_query)).fetchall()
-
-    return render_template('dashboard.html', labels=labels, data=data, filter_by=filter_by, filter_value=filter_value, line_machines=line_machines, issue_types=issue_types)
-
-
 
 @main_bp.route('/profile')
 @login_required
@@ -92,7 +53,130 @@ def stack_status_5607():
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
 @main_bp.route('/open_tickets')
-@login_required
 def open_tickets():
+    tickets = Ticket.query.all()
     return render_template('open_tickets.html', title='Open Andon Tickets')
+
+
+@main_bp.route('/dashboard')
+def dashboard():
+    closed_tickets = ClosedTicket.query.all()
+    for ticket in closed_tickets:
+        logging.debug(f"Ticket ID: {ticket.id}, Issue Type: {ticket.issue_type}, Comment: {ticket.comment}, Request Made At: {ticket.request_made_at}")
+    return render_template('dashboard.html', closed_tickets=[ticket.to_dict() for ticket in closed_tickets])
+
+
+@main_bp.route('/filter_tickets', methods=['POST'])
+@login_required
+def filter_tickets():
+    data = request.get_json()
+    print("Received data:", data)
+    start_date = data.get('start_date')
+    end_date = data.get('end_date')
+    line_machine = data.get('line_machine')
+    issue_type = data.get('issue_type')
+
+    query = ClosedTicket.query
+
+    if start_date:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    else:
+        start_date = datetime.now() - timedelta(days=7)
+
+    if end_date:
+        end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    else:
+        end_date = datetime.now()
+
+    query = query.filter(ClosedTicket.closed_at >= start_date)
+    query = query.filter(ClosedTicket.closed_at <= end_date)
+
+    if line_machine:
+        query = query.filter(ClosedTicket.line_machine == line_machine)
+    if issue_type:
+        query = query.filter(ClosedTicket.issue_type == issue_type)
+
+    tickets = query.all()
+    print("Filtered tickets:", tickets)
+
+    total_tickets = len(tickets)
+    avg_closing_time = db.session.query(func.avg(ClosedTicket.closed_at - ClosedTicket.created_at)).scalar()
+    avg_ack_time = db.session.query(func.avg(ClosedTicket.acknowledged_at - ClosedTicket.created_at)).scalar()
+    closed_without_ack = db.session.query(func.count()).filter(ClosedTicket.acknowledged_at == None).scalar()
+
+    response = {
+        'total_tickets': total_tickets,
+        'avg_closing_time': str(avg_closing_time),
+        'avg_ack_time': str(avg_ack_time),
+        'closed_without_ack': closed_without_ack,
+        'tickets': [ticket.to_dict() for ticket in tickets]
+    }
+
+    print("Response data:", response)
+    return jsonify(response)
+
+@main_bp.route('/dashboard2')
+def dashboard2():
+    range = request.args.get('range', 'today')
+    now = datetime.now()
+
+    if range == '30days':
+        start_date = now - timedelta(days=30)
+        end_date = now
+        range_display = "Last 30 Days"
+    elif range == '7days':
+        start_date = now - timedelta(days=7)
+        end_date = now
+        range_display = "Last 7 Days"
+    elif range == '24hours':
+        start_date = now - timedelta(hours=24)
+        end_date = now
+        range_display = "Last 24 Hours"
+    elif range == 'yesterday':
+        start_date = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        range_display = "Yesterday"
+    else:  # today
+        start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = now
+        range_display = "Today"
+
+    tickets_opened = ClosedTicket.query.filter(ClosedTicket.request_made_at >= start_date, ClosedTicket.request_made_at < end_date).count()
+    tickets_closed = ClosedTicket.query.filter(ClosedTicket.closed_at >= start_date, ClosedTicket.closed_at < end_date).count()
+
+    average_time_to_close = db.session.query(
+        func.avg(text("TIMESTAMPDIFF(SECOND, request_made_at, closed_at)"))
+    ).filter(ClosedTicket.closed_at >= start_date, ClosedTicket.closed_at < end_date).scalar()
+
+    average_time_to_acknowledge = db.session.query(
+        func.avg(text("TIMESTAMPDIFF(SECOND, request_made_at, acknowledged_at)"))
+    ).filter(ClosedTicket.acknowledged_at >= start_date, ClosedTicket.acknowledged_at < end_date).scalar()
+
+    logging.debug(f"Start date: {start_date}")
+    logging.debug(f"End date: {end_date}")
+    logging.debug(f"Tickets opened: {tickets_opened}")
+    logging.debug(f"Tickets closed: {tickets_closed}")
+    logging.debug(f"Average time to close (seconds): {average_time_to_close}")
+    logging.debug(f"Average time to acknowledge (seconds): {average_time_to_acknowledge}")
+
+    def format_seconds(seconds):
+        if seconds is None or seconds == 0:
+            return 'N/A'
+        minutes, _ = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        return f'{int(hours)}h {int(minutes)}m'
+
+    formatted_average_time_to_close = format_seconds(average_time_to_close)
+    formatted_average_time_to_acknowledge = format_seconds(average_time_to_acknowledge)
+
+    logging.debug(f"Formatted average time to close: {formatted_average_time_to_close}")
+    logging.debug(f"Formatted average time to acknowledge: {formatted_average_time_to_acknowledge}")
+
+    return render_template('dashboard2.html', 
+                           tickets_opened=tickets_opened, 
+                           tickets_closed=tickets_closed, 
+                           average_time_to_close=formatted_average_time_to_close,
+                           average_time_to_acknowledge=formatted_average_time_to_acknowledge,
+                           range_display=range_display)
