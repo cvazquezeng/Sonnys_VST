@@ -62,10 +62,11 @@ def open_tickets():
 
 @main_bp.route('/dashboard')
 def dashboard():
-    closed_tickets = ClosedTicket.query.all()
+    closed_tickets = ClosedTicket.query.order_by(ClosedTicket.request_made_at.desc()).all()
     for ticket in closed_tickets:
         logging.debug(f"Ticket ID: {ticket.id}, Issue Type: {ticket.issue_type}, Comment: {ticket.comment}, Request Made At: {ticket.request_made_at}")
     return render_template('dashboard.html', closed_tickets=[ticket.to_dict() for ticket in closed_tickets])
+
 
 
 @main_bp.route('/filter_tickets', methods=['POST'])
@@ -140,8 +141,9 @@ def dashboard2():
         range_display = "Yesterday"
     else:  # today
         start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
-        end_date = now
+        end_date = now.replace(hour=23, minute=59, second=59, microsecond=999999)
         range_display = "Today"
+
 
     tickets_opened = ClosedTicket.query.filter(ClosedTicket.request_made_at >= start_date, ClosedTicket.request_made_at < end_date).count()
     tickets_closed = ClosedTicket.query.filter(ClosedTicket.closed_at >= start_date, ClosedTicket.closed_at < end_date).count()

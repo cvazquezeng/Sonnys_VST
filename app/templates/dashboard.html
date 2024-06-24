@@ -26,9 +26,9 @@
                 <td>{{ ticket.line_machine }}</td>
                 <td>{{ ticket.issue_type }}</td>
                 <td>{{ ticket.comment }}</td>
-                <td>{{ ticket.request_made_at.strftime('%B/%d/%y %I:%M:%S %p') if ticket.request_made_at else 'N/A' }}</td>
-                <td>{{ ticket.acknowledged_at.strftime('%B/%d/%y %I:%M:%S %p') if ticket.acknowledged_at else 'N/A' }}</td>
-                <td>{{ ticket.closed_at.strftime('%B/%d/%y %I:%M:%S %p') if ticket.closed_at else 'N/A' }}</td>
+                <td>{{ ticket.request_made_at.strftime('%m-%d-%y %I:%M %p') if ticket.request_made_at else 'N/A' }}</td>
+                <td>{{ ticket.acknowledged_at.strftime('%m-%d-%y %I:%M %p') if ticket.acknowledged_at else 'N/A' }}</td>
+                <td>{{ ticket.closed_at.strftime('%m-%d-%y %I:%M %p') if ticket.closed_at else 'N/A' }}</td>
             </tr>
             {% else %}
             <tr>

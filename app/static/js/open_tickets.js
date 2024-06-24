@@ -26,18 +26,23 @@ document.addEventListener("DOMContentLoaded", function() {
                     switch (properties["Andon Status"]) {
                         case 'Acknowledged':
                             statusColor = 'green';
+                            textColor = 'white'
                             break;
                         case 'Request Made':
                             statusColor = 'yellow';
+                            textColor = 'black'
                             break;
                         case 'Work Stoppage':
                             statusColor = 'orange';
+                            textColor = 'black'
                             break;
                         case 'Closed':
                             statusColor = 'grey';
+                            textColor = 'white'
                             break;
                         case 'Issue Escalated':
                             statusColor = 'red';
+                            textColor = 'white'
                             break;    
                         default:
                             statusColor = '#4CAF50'; // Default color
@@ -46,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     square.innerHTML = `
                         <div class="ticket-header" style="background-color: ${event.ui.colour || '#4CAF50'};">
                             <h3>${properties["Line/Machine"] || 'Unknown'}</h3>
-                            <div class="status-sticker" style="background-color: ${statusColor};">
+                            <div class="status-sticker" style="background-color: ${statusColor}; color: ${textColor};">
                                 ${properties["Andon Status"] || 'Unknown'}
                             </div>
                         </div>

@@ -2,8 +2,7 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from datetime import datetime
-import pytz
+
 
 
 class User(UserMixin, db.Model):
@@ -32,6 +31,8 @@ class Ticket(db.Model):
     closed_at = db.Column(db.DateTime, nullable=True)  # Ensure this column is defined
     request_made_at = db.Column(db.DateTime, nullable=True)
     acknowledged_at = db.Column(db.DateTime, nullable=True)
+    notified = db.Column(db.Boolean, default=False)  # Add this line
+
     
     def __init__(self, ticket_id, line_machine, andon_status, notification_groups, issue_type, comment, timestamp, color, closed_at=None, request_made_at=None, acknowledged_at=None):
         self.ticket_id = ticket_id
@@ -71,15 +72,7 @@ class ClosedTicket(db.Model):
             'line_machine': self.line_machine,
             'issue_type': self.issue_type,
             'comment': self.comment,
-            'request_made_at': self.convert_to_timezone(self.request_made_at),
-            'acknowledged_at': self.convert_to_timezone(self.acknowledged_at),
-            'closed_at': self.convert_to_timezone(self.closed_at)
+            'request_made_at': self.request_made_at,
+            'acknowledged_at': self.acknowledged_at,
+            'closed_at': self.closed_at
         }
-
-    @staticmethod
-    def convert_to_timezone(utc_dt):
-        if utc_dt:
-            utc_dt = utc_dt.replace(tzinfo=pytz.UTC)
-            eastern = utc_dt.astimezone(pytz.timezone('America/New_York'))
-            return eastern
-        return None
