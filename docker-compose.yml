@@ -27,6 +27,7 @@ services:
       - db
         
     environment:
+      - TZ=America/New_York
       - FLASK_ENV=production
       - SECRET_KEY=wCDyL:tM$zorB[>g8/l|:C2YeUJScrb"7dBRdfi)aA3{~+L#HPpBJDBd;3Q7/Ni
       - DB_USER=cvazquez
