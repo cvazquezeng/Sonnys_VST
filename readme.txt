@@ -10,11 +10,30 @@ The application ensures security and session management using Flask-Login.
 The backend communicates with a stack light system using Modbus TCP, handling light control and status fetching.
 
 
-
-
++ make .sh executable
+--------------------------
 chmod +x
+
++ Reload the docker
+--------------------------
 docker-compose down && \
 docker volume prune -f && \
 docker image prune -f && \
 docker-compose up --build -d
+
++ Create new username
+--------------------------
+python usercreation.py config_app.Config username password
+
++ delete username
+--------------------------
+python delete_user.py config_app.Config username
+
++ migreate db
+---------------------------
+export FLASK_APP=migrate.py
+flask db init <- init if not 
+flask db migrate -m "comment"
+flask db upgrade
+
 

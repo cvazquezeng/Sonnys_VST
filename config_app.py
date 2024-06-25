@@ -1,4 +1,4 @@
-# config.py
+# config_app.py
 import os
 
 class Config:

@@ -21,7 +21,7 @@ def fetch_active_tickets():
     notification_groups_to_notify = [
         'Facilities', 'Maintenance 1st Shift', 
         'Robot Programming - 5605', 'Robot Programming - 5607', 
-        'Testing'
+        'Testing','Sr Manager - Mfg Engineering'
     ]
     
     if response_active.status_code == 200:
@@ -31,7 +31,8 @@ def fetch_active_tickets():
         for item in data_active:
             ticket_id = item['id']
             timestamp = datetime.fromtimestamp(item['ts_epoch'] / 1000)  # Assume timestamp is in EDT
-            formatted_timestamp = timestamp.strftime('%Y-%m-%d %I:%M %p')  # Convert to AM/PM format for Teams notification
+            formatted_timestamp = timestamp.strftime('%Y-%m-%d %H:%M:%S')  # MySQL compatible format
+            formatted_timestamp_ampm = timestamp.strftime('%Y-%m-%d %I:%M %p')  # Convert to AM/PM format for Teams notification
             
             print(f"Received Timestamp: {timestamp}")  # Debug print
             
@@ -49,13 +50,13 @@ def fetch_active_tickets():
             existing_ticket = Ticket.query.filter_by(ticket_id=ticket_id).first()
             if not existing_ticket:
                 new_ticket = Ticket(
-                    ticket_id=str(ticket_id),
+                    ticket_id=ticket_id,
                     line_machine=line_machine,
                     andon_status=andon_status,
                     notification_groups=notification_groups,
                     issue_type=issue_type,
                     comment=comment,
-                    timestamp=str(formatted_timestamp),
+                    timestamp=timestamp,  # Use MySQL compatible format
                     color=color,
                     closed_at=None,  # New ticket is active
                     notified=False  # Initialize notified to False
@@ -67,7 +68,6 @@ def fetch_active_tickets():
                 if any(group in notification_groups_list for group in notification_groups_to_notify):
                     new_ticket.notified = True  # Set notified to True before sending notification
                     db.session.commit()  # Commit the notified change
-
                     webhook_url = 'https://sonnysdirect.webhook.office.com/webhookb2/653a9e3d-5cab-4559-b35f-89e729b34e67@80a0cabe-dfaf-4e95-bdcb-366958455b28/IncomingWebhook/7b4e3100232e4a25932cb9cd144a6355/03ba285c-6d2f-45a9-aacb-778b9aa98af9'  # Replace with your Teams webhook URL
                     mention_users = ['carlos.vazquez@sonnysdirect.com', 'carlos.zapata@sonnysdirect.com','farid.ramezan@sonnysdirect.com','evan.reif@sonnysdirect.com']  # Replace with actual usernames to mention
                     ticket_details = {
@@ -75,7 +75,7 @@ def fetch_active_tickets():
                         "line_machine": line_machine,
                         "andon_status": andon_status,
                         "issue_type": issue_type,
-                        "timestamp": str(formatted_timestamp),  # Ensure this is a string
+                        "timestamp": formatted_timestamp_ampm,  # Use AM/PM format for Teams notification
                         "comment": comment,
                         "notification_groups": notification_groups
                     }
@@ -102,7 +102,7 @@ def fetch_active_tickets():
                             "line_machine": line_machine,
                             "andon_status": andon_status,
                             "issue_type": issue_type,
-                            "timestamp": str(timestamp),  # Ensure this is a string
+                            "timestamp": formatted_timestamp_ampm,  # Use AM/PM format for Teams notification
                             "comment": comment,
                             "notification_groups": notification_groups
                         }
@@ -121,7 +121,7 @@ def fetch_active_tickets():
 
 def fetch_closed_tickets():
     today = datetime.now()
-    five_days_ago = today - timedelta(days=90)
+    five_days_ago = today - timedelta(days=1)
 
     # Format the dates to the required format
     current_date = today.strftime('%b%%20%d,%%20%Y%%2000:00:AM')
@@ -300,3 +300,5 @@ def send_teams_notification(webhook_url, ticket_details, mention_users):
         print(f"HTTP error occurred: {http_err} - Response: {response.text}")
     except Exception as err:
         print(f"Other error occurred: {err}")
+
+#FETCH CLOSED TICKETS???

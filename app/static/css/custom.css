@@ -33,15 +33,41 @@ th, td {
     overflow: hidden; /* Hide overflow text */
     text-overflow: ellipsis; /* Add ellipsis for overflow text */
     color: rgb(0, 0, 0); /* Text color for verification */
+    max-width: 150px; /* Set a max-width for each cell */
+    position: relative; /* Needed for hover effect */
 }
 
 th {
     background-color: #f2f2f2;
 }
-
-td {
-    max-width: 150px; /* Set a max-width for each cell */
+/* Hover effect for table cells */
+/* Table cell hover effect with tooltip */
+/* Table cell hover effect with tooltip */
+.table-common td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Adjust as needed */
+    position: relative; /* Needed for hover effect */
 }
+
+.table-common td:hover::after {
+    content: attr(data-full-text);
+    white-space: normal;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 1000;
+    width: max-content;
+    max-width: 300px; /* Adjust as needed */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+
 
 /* Form styles for the dashboard */
 .form-inline {

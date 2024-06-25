@@ -5,7 +5,7 @@
 
 <div class="main-content">
     <h2>Closed Tickets</h2>
-    <table class="table">
+    <table class="table-common table table-striped table-hover table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
@@ -21,14 +21,14 @@
         <tbody>
             {% for ticket in closed_tickets %}
             <tr>
-                <td>{{ ticket.id }}</td>
-                <td>{{ ticket.ticket_id }}</td>
-                <td>{{ ticket.line_machine }}</td>
-                <td>{{ ticket.issue_type }}</td>
-                <td>{{ ticket.comment }}</td>
-                <td>{{ ticket.request_made_at.strftime('%m-%d-%y %I:%M %p') if ticket.request_made_at else 'N/A' }}</td>
-                <td>{{ ticket.acknowledged_at.strftime('%m-%d-%y %I:%M %p') if ticket.acknowledged_at else 'N/A' }}</td>
-                <td>{{ ticket.closed_at.strftime('%m-%d-%y %I:%M %p') if ticket.closed_at else 'N/A' }}</td>
+                <td data-full-text="{{ ticket.id }}">{{ ticket.id }}</td>
+                <td data-full-text="{{ ticket.ticket_id }}">{{ ticket.ticket_id }}</td>
+                <td data-full-text="{{ ticket.line_machine }}">{{ ticket.line_machine }}</td>
+                <td data-full-text="{{ ticket.issue_type }}">{{ ticket.issue_type }}</td>
+                <td data-full-text="{{ ticket.comment }}">{{ ticket.comment }}</td>
+                <td data-full-text="{{ ticket.request_made_at.strftime('%m-%d-%y %I:%M %p') if ticket.request_made_at else 'N/A' }}">{{ ticket.request_made_at.strftime('%m-%d-%y %I:%M %p') if ticket.request_made_at else 'N/A' }}</td>
+                <td data-full-text="{{ ticket.acknowledged_at.strftime('%m-%d-%y %I:%M %p') if ticket.acknowledged_at else 'N/A' }}">{{ ticket.acknowledged_at.strftime('%m-%d-%y %I:%M %p') if ticket.acknowledged_at else 'N/A' }}</td>
+                <td data-full-text="{{ ticket.closed_at.strftime('%m-%d-%y %I:%M %p') if ticket.closed_at else 'N/A' }}">{{ ticket.closed_at.strftime('%m-%d-%y %I:%M %p') if ticket.closed_at else 'N/A' }}</td>
             </tr>
             {% else %}
             <tr>
