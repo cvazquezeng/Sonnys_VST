@@ -1,28 +1,75 @@
-.filter-button {
-    margin-right: 5px;
-}
+/* dashboard2.css */
 
-.range-display {
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.summary-table .table {
-    margin-top: 20px;
-    border-collapse: collapse; /* Ensures the borders are not doubled */
+/* Common table styles */
+.table-common {
     width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
 }
 
-.summary-table .table th, .summary-table .table td {
+.table-common th,
+.table-common td {
     text-align: center;
-    border: 1px solid #dee2e6; /* Adds borders to table cells */
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
 }
 
-.summary-table .table th {
-    background-color: #f8f9fa; /* Light gray background for table headers */
-    color: black
+.table-common thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    
 }
 
-.summary-table .table tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Light gray background for even rows */
+
+.table-common tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table-common .table {
+    background-color: #fff;
+}
+
+/* Add zebra-striping */
+.table-common tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.table-borderless th,
+.table-borderless td,
+.table-borderless thead th,
+.table-borderless tbody + tbody {
+    border: 0;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-dark {
+    color: #fff;
+    background-color: #343a40;
+}
+
+.table-dark th,
+.table-dark td,
+.table-dark thead th {
+    border-color: #454d55;
+}
+
+.table-dark.table-bordered {
+    border: 0;
 }

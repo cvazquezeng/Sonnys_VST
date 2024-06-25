@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="summary-table">
-        <table class="table table-striped">
+        <table class="table-common table table-striped table-hover table-bordered">
             <thead class="thead-dark">
                 <tr>
                     <th>Tickets Opened</th>
@@ -37,6 +37,23 @@
                     <td>{{ average_time_to_close }}</td>
                     <td>{{ average_time_to_acknowledge }}</td>
                 </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- New Detailed Table -->
+    <div class="detailed-table mt-5">
+        <h2 class="mb-4">Detailed Ticket Data</h2>
+        <table class="table-common table table-striped table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th id="time-label">Time</th>
+                    <th>Tickets Opened</th>
+                    <th>Tickets Closed</th>
+                </tr>
+            </thead>
+            <tbody id="detailed-data">
+                <!-- Data will be dynamically populated here -->
             </tbody>
         </table>
     </div>

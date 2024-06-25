@@ -182,3 +182,95 @@ def dashboard2():
                            average_time_to_close=formatted_average_time_to_close,
                            average_time_to_acknowledge=formatted_average_time_to_acknowledge,
                            range_display=range_display)
+
+@main_bp.route('/api/detailed_data')
+def detailed_data():
+    selected_range = request.args.get('range', 'today')
+    now = datetime.now()
+    details = []
+
+    if selected_range == 'today':
+        start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = now
+        shifts = [
+            {'label': 'Morning Shift', 'start': start_date.replace(hour=7, minute=0), 'end': start_date.replace(hour=15, minute=30)},
+            {'label': 'Night Shift', 'start': start_date.replace(hour=15, minute=30), 'end': start_date.replace(hour=23, minute=59, second=59, microsecond=999999)}
+        ]
+    elif selected_range == 'yesterday':
+        start_date = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = start_date + timedelta(days=1)
+        shifts = [
+            {'label': 'Morning Shift', 'start': start_date.replace(hour=7, minute=0), 'end': start_date.replace(hour=15, minute=30)},
+            {'label': 'Night Shift', 'start': start_date.replace(hour=15, minute=30), 'end': start_date.replace(hour=23, minute=59, second=59, microsecond=999999)}
+        ]
+    elif selected_range == '24hours':
+        start_date = now - timedelta(hours=24)
+        end_date = now
+        shifts = []
+
+        # Calculate the shifts based on the start_date and end_date
+        morning_shift_start = start_date.replace(hour=7, minute=0, second=0, microsecond=0)
+        night_shift_start = start_date.replace(hour=15, minute=30, second=0, microsecond=0)
+        next_morning_shift_start = morning_shift_start + timedelta(days=1)
+        next_night_shift_start = night_shift_start + timedelta(days=1)
+
+        if start_date < morning_shift_start:
+            shifts.append({
+                'label': 'Night Shift',
+                'start': start_date,
+                'end': morning_shift_start
+            })
+        if start_date < night_shift_start:
+            shifts.append({
+                'label': 'Morning Shift',
+                'start': max(start_date, morning_shift_start),
+                'end': night_shift_start
+            })
+        if start_date < next_morning_shift_start:
+            shifts.append({
+                'label': 'Night Shift',
+                'start': max(start_date, night_shift_start),
+                'end': min(end_date, next_morning_shift_start)
+            })
+        if end_date > next_morning_shift_start:
+            shifts.append({
+                'label': 'Morning Shift',
+                'start': next_morning_shift_start,
+                'end': min(end_date, next_night_shift_start)
+            })
+        if end_date > next_night_shift_start:
+            shifts.append({
+                'label': 'Night Shift',
+                'start': next_night_shift_start,
+                'end': end_date
+            })
+
+    elif selected_range == '7days':
+        start_date = now - timedelta(days=7)
+        end_date = now
+        day = start_date
+
+        for _ in range(7):
+            day_start = day.replace(hour=0, minute=0, second=0, microsecond=0)
+            day_end = day_start + timedelta(days=1)
+            opened = ClosedTicket.query.filter(ClosedTicket.request_made_at >= day_start, ClosedTicket.request_made_at < day_end).count()
+            closed = ClosedTicket.query.filter(ClosedTicket.closed_at >= day_start, ClosedTicket.closed_at < day_end).count()
+            details.append({'time': day_start.strftime('%A'), 'opened': opened, 'closed': closed})
+            day += timedelta(days=1)
+
+    elif selected_range == '30days':
+        start_date = now - timedelta(days=30)
+        for week in range(5):
+            week_start = start_date + timedelta(weeks=week)
+            week_end = week_start + timedelta(weeks=1)
+            opened = ClosedTicket.query.filter(ClosedTicket.request_made_at >= week_start, ClosedTicket.request_made_at < week_end).count()
+            closed = ClosedTicket.query.filter(ClosedTicket.closed_at >= week_start, ClosedTicket.closed_at < week_end).count()
+            details.append({'time': f'Week {week+1}', 'opened': opened, 'closed': closed})
+
+    if selected_range in ['today', 'yesterday', '24hours']:
+        for shift in shifts:
+            opened = ClosedTicket.query.filter(ClosedTicket.request_made_at >= shift['start'], ClosedTicket.request_made_at < shift['end']).count()
+            closed = ClosedTicket.query.filter(ClosedTicket.closed_at >= shift['start'], ClosedTicket.closed_at < shift['end']).count()
+            details.append({'time': shift['label'], 'opened': opened, 'closed': closed})
+
+    return jsonify({'range': selected_range, 'details': details})
