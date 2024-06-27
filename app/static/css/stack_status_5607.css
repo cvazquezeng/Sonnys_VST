@@ -21,7 +21,7 @@ body {
 .summary-row {
     display: flex;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between; /* Ensure spacing between boxes */
     margin-bottom: 20px;
 }
 
@@ -40,7 +40,6 @@ body {
     font-size: 14px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .summary-box:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -91,7 +90,7 @@ body {
 
 .status-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Updated to use CSS Grid */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Use auto-fit to adjust columns */
     gap: 10px; /* Spacing between squares */
     width: 100%;
     padding: 20px;
@@ -150,7 +149,48 @@ body {
 
 /* Responsive design */
 @media (max-width: 768px) {
+    .summary-row {
+        flex-wrap: wrap; /* Prevent wrapping */
+        overflow-x: hidden; /* Allow horizontal scrolling */
+    }
+
+    .summary-box {
+        flex: 1 1 100px; /* Ensure they can shrink proportionally */
+        margin: 1px; /* Adjust margin for spacing */
+        font-size: 2.2vw; /* Make font size responsive */
+    }
+
     .status-section {
         width: 100%;
     }
+}
+/* Ensure navbar items stay on one line */
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap !important; /* Prevent wrapping */
+}
+
+.navbar-text-logo {
+    display: flex;
+    align-items: center;
+    white-space: wrap; /* Prevent wrapping */
+}
+
+.navbar-text-logo .navbar-brand {
+    margin-right: 10px;
+}
+
+@media (max-width: 767.98px) {
+    .navbar-brand
+     {
+        display: none !important; 
+    }
+    .navbar-text-logo {
+        display: right !important; 
+    }
+}
+html {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }

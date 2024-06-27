@@ -57,27 +57,26 @@ document.addEventListener("DOMContentLoaded", function() {
                 var state = color !== "off";
                 var address = statusOptions.indexOf(selectedSquare) * 5;
 
-                switch (color) {
-                    case "red":
-                        sendControlRequest(address + 4, state, selectedSquare);
-                        break;
-                    case "yellow":
-                        sendControlRequest(address + 3, state, selectedSquare);
-                        break;
-                    case "blue":
-                        sendControlRequest(address + 2, state, selectedSquare);
-                        break;
-                    case "white":
-                        sendControlRequest(address + 1, state, selectedSquare);
-                        break;
-                    case "green":
-                        sendControlRequest(address + 0, state, selectedSquare);
-                        break;
-                    case "off":
-                        for (var i = 0; i < 5; i++) {
-                            sendControlRequest(address + i, false, selectedSquare);
-                        }
-                        break;
+                if (color === "off") {
+                    sendControlRequest(Array.from({ length: 5 }, (_, i) => address + i), false, selectedSquare);
+                } else {
+                    switch (color) {
+                        case "red":
+                            sendControlRequest([address + 4], state, selectedSquare);
+                            break;
+                        case "yellow":
+                            sendControlRequest([address + 3], state, selectedSquare);
+                            break;
+                        case "blue":
+                            sendControlRequest([address + 2], state, selectedSquare);
+                            break;
+                        case "white":
+                            sendControlRequest([address + 1], state, selectedSquare);
+                            break;
+                        case "green":
+                            sendControlRequest([address + 0], state, selectedSquare);
+                            break;
+                    }
                 }
 
                 contextMenu.style.display = "none";
@@ -157,18 +156,30 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('white-count').textContent = whiteCount;
     }
 
-    function sendControlRequest(address, state, selected) {
-        fetch('/api/control_5605', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ address: address, state: state, selected: selected })
-        }).then(response => response.json()).then(data => {
-            if (data.success) {
-                fetchContinuousStatus();
+    function sendControlRequest(addresses, state, selected) {
+        var requests = addresses.map(address => {
+            return fetch('/api/control_5605', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ address: address, state: state, selected: selected })
+            }).then(response => {
+                if (response.status === 403) {
+                    return response.json().then(data => {
+                        return { success: false, message: data.message };
+                    });
+                }
+                return response.json();
+            });
+        });
+
+        Promise.all(requests).then(results => {
+            var unauthorized = results.find(result => result.success === false && result.message);
+            if (unauthorized) {
+                $('#unauthorizedModal').modal('show');
             } else {
-                console.error("Failed to control light");
+                fetchContinuousStatus();
             }
         }).catch(error => {
             console.error("Error controlling light:", error);

@@ -38,44 +38,49 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (selected === "5607 Building") {
                         if (buttonId === "off-button") {
-                            sendControlRequest(-1, false, selected);
+                            sendControlRequest(Array.from({ length: 115 }, (_, i) => i), false, selected);
                         } else {
                             var addressRange = Array.from({ length: 115 }, (_, i) => i);
-                            addressRange.forEach(address => {
-                                if (address % 5 === buttons[buttonId]) {
-                                    sendControlRequest(address, state, selected);
-                                }
-                            });
+                            var addresses = addressRange.filter(address => address % 5 === buttons[buttonId]);
+                            sendControlRequest(addresses, state, selected);
                         }
                     } else {
                         var offset = options.indexOf(selected) * 5;
                         if (buttonId === "off-button") {
-                            for (var i = 0; i < 5; i++) {
-                                sendControlRequest(offset + i, false, selected);
-                            }
+                            sendControlRequest(Array.from({ length: 5 }, (_, i) => offset + i), false, selected);
                         } else {
                             var address = offset + buttons[buttonId];
-                            sendControlRequest(address, state, selected);
+                            sendControlRequest([address], state, selected);
                         }
                     }
                 });
             }
         });
 
-        function sendControlRequest(address, state, selected) {
-            fetch('/api/control_5607', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ address: address, state: state, selected: selected })
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    setTimeout(function() {
-                        fetchStatus(selected);
-                    }, 500);
+        function sendControlRequest(addresses, state, selected) {
+            var requests = addresses.map(address => {
+                return fetch('/api/control_5607', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ address: address, state: state, selected: selected })
+                }).then(response => {
+                    if (response.status === 403) {
+                        return response.json().then(data => {
+                            return { success: false, message: data.message };
+                        });
+                    }
+                    return response.json();
+                });
+            });
+
+            Promise.all(requests).then(results => {
+                var unauthorized = results.find(result => result.success === false && result.message);
+                if (unauthorized) {
+                    $('#unauthorizedModal').modal('show');
                 } else {
-                    console.error("Failed to control light");
+                    fetchStatus(selected);
                 }
             }).catch(error => {
                 console.error("Error controlling light:", error);
@@ -110,32 +115,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
         dropdownMenu.dispatchEvent(new Event('change'));
     }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        const statusSection = document.getElementById('status-section');
-    
-        fetch('/api/status_5607?selected=5607 Building')
-            .then(response => {
-                if (!response.ok) {
-                    if (response.status === 503) {
-                        throw new Error("Modbus is offline");
-                    }
-                    throw new Error("Failed to fetch status");
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.status === "offline") {
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const statusSection = document.getElementById('status-section');
+
+    fetch('/api/status_5607?selected=5607 Building')
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 503) {
                     throw new Error("Modbus is offline");
                 }
-                // Handle data...
-            })
-            .catch(error => {
-                const errorMessage = document.createElement('div');
-                errorMessage.classList.add('error-message');
-                errorMessage.textContent = error.message;
-                statusSection.appendChild(errorMessage);
-            });
-    });
-    
+                throw new Error("Failed to fetch status");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === "offline") {
+                throw new Error("Modbus is offline");
+            }
+            // Handle data...
+        })
+        .catch(error => {
+            const errorMessage = document.createElement('div');
+            errorMessage.classList.add('error-message');
+            errorMessage.textContent = error.message;
+            statusSection.appendChild(errorMessage);
+        });
 });

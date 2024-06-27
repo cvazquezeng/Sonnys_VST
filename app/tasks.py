@@ -121,7 +121,7 @@ def fetch_active_tickets():
 
 def fetch_closed_tickets():
     today = datetime.now()
-    five_days_ago = today - timedelta(days=1)
+    five_days_ago = today - timedelta(days=2)
 
     # Format the dates to the required format
     current_date = today.strftime('%b%%20%d,%%20%Y%%2000:00:AM')

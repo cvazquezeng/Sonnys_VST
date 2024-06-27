@@ -12,9 +12,11 @@ body, html {
     margin-top: 30px !important; /* Force the padding to be applied */
     margin-left: 100px; /* Adjust based on sidebar width */
     box-sizing: border-box;
-    width: calc(100% - 130px); /* Adjust based on sidebar width */
+    width: calc(100% - 130px); 
+    
+    /* Adjust based on sidebar width */
     transition: margin-left 0.3s, width 0.3s;
-    overflow: auto; /* Ensure content is scrollable if necessary */
+    overflow: auto; /*Ensure content is scrollable if necessary*/
     font-size: 1.0vw; /* Use viewport width units for responsive text size */
 }
 
@@ -22,7 +24,7 @@ body, html {
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 1.0vw; /* Use viewport width units for responsive text size */
+    font-size: 2.4vw !important; /* Use viewport width units for responsive text size */
 }
 
 th, td {
@@ -98,7 +100,7 @@ th {
     position: fixed; /* Use fixed positioning */
     top: 0; /* Position at the top */
     left: 230px; /* Position to the right of the sidebar */
-    overflow: hidden; /* Hide overflow text */
+    /* overflow: hidden; Hide overflow text */
     text-overflow: ellipsis; /* Add ellipsis for overflow text */
     white-space: nowrap; /* Prevent line breaks */
     transition: width 0.3s, left 0.3s; /* Smooth transition for width and left */
@@ -154,4 +156,91 @@ th {
     #sidebar-container {
         display: none; /* Hide sidebar on small screens */
     }
+
+}
+.dropdown-menu {
+    z-index: 1050; /* Higher than the default navbar and content */
+}
+.nav-item.dropdown .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    color: #000; /* Change to your preferred color */
+}
+
+.nav-item.dropdown .dropdown-toggle:hover {
+    color: #192631; /* Change to your preferred hover color */
+}
+.dropdown-menu .dropdown-item {
+    padding: 10px 20px; /* Adjust padding for better spacing */
+    color: #000; /* Change to your preferred color */
+    z-index: 1050; /* Higher than the default navbar and content */
+
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa; /* Change to your preferred hover background color */
+    color: #192631; /* Change to your preferred hover text color */
+}
+.dropdown-item {
+    padding: 10px 20px;
+    color: #000;
+    transition: background-color 0.2s, color 0.2s;
+    z-index: 1050; /* Higher than the default navbar and content */
+
+}
+.user-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem; /* Adjust the icon size */
+    background-color: #192631; /* Primary blue background color */
+    color: #fff; /* White color for the icon */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Make it a circle */
+}
+.navbar .nav-item .nav-link {
+    display: flex;
+    align-items: center;
+}
+.navbar .nav-item .nav-link .icon-circle {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem; /* Adjust the icon size */
+    background-color: #192631; /* Primary blue background color */
+    color: #fff; /* White color for the icon */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Make it a circle */
+    margin-right: 0.5rem;
+    }
+/* Tooltip styles */
+.tooltip-custom {
+    display: none;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.85); /* Dark background */
+    color: #fff; /* White text */
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    z-index: 2000; /* Ensure tooltip is in front */
+    white-space: normal;
+    max-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    pointer-events: none; /* Ensure the tooltip does not interfere with mouse events */
+    transition: opacity 0.2s ease-in-out, top 0.2s ease-in-out;
+    opacity: 0;
+}
+
+/* Tooltip arrow */
+.tooltip-custom::after {
+    content: '';
+    position: absolute;
+    border-width: 6px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.85) transparent transparent transparent;
+    top: 100%; /* Arrow pointing down */
+    left: 50%;
+    transform: translateX(-50%);
 }

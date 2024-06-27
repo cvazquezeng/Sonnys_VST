@@ -1,0 +1,89 @@
+/* General styles */
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0; /* Remove top padding for the fixed navbar */
+    font-family: Arial, sans-serif;
+    font-size: 1vw; /* Base font size using viewport width */
+}
+
+.navbar {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 3D-like border */
+    z-index: 1030; /* Ensure navbar is on top */
+    width: 100%; /* Ensure navbar takes full width */
+    position: relative; /* Adjust position to manage z-index properly */
+    transition: width 0.3s, height 0.3s; /* Smooth transition for width and height */
+    overflow: visible; /* Allow overflow to show dropdowns */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+    white-space: nowrap; /* Prevent line breaks */
+    font-size: 1vw; /* Base font size using viewport width */
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #000; /* Ensure the navbar links are black for contrast */
+    display: flex;
+    align-items: center; /* Vertically center text */
+    font-size: 1vw; /* Base font size using viewport width */
+}
+
+/* Ensure dropdown menu is on top */
+.navbar-nav .nav-item .dropdown-menu {
+    z-index: 1060; /* Higher than the navbar's z-index */
+    position: absolute; /* Absolute positioning to manage z-index */
+    top: 100%; /* Position below the navbar */
+}
+
+/* New styles for nav buttons */
+.nav-buttons {
+    display: flex;
+    align-items: center;
+    margin-right: auto; /* Align buttons to the left */
+    padding-left: 10px; /* Adjust as needed for spacing */
+}
+
+.nav-button {
+    background: transparent;
+    color: #333; /* Dark text color for visibility */
+    border: none;
+    padding: 15px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 1vw; /* Base font size using viewport width */
+    line-height: 1.5;
+    height: 100%; /* Take the full height of the navbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px 4px 0 0; /* Rounded top corners */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-button.active {
+    color: black; /* Text color black for active button */
+    border-left: 12px solid #1c0669; /* White bottom border for active state */
+}
+
+.nav-button:hover {
+    background-color: #44525c; /* Darker blue on hover for unselected state */
+    color: white;
+}
+
+.nav-button i {
+    margin-right: 25px; /* Add space between icon and text */
+}
+
+.navbar-logo {
+    display: none; /* Hide logo by default */
+}
+
+.logo-img {
+    height: 30px; /* Adjust the logo size */
+}
+
+@media (max-width: 767.98px) {
+    .navbar-logo {
+        display: block; /* Show logo on small screens */
+    }
+}

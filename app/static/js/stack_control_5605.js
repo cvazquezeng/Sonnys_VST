@@ -37,44 +37,49 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (selected === "5605 Building") {
                         if (buttonId === "off-button") {
-                            sendControlRequest(-1, false, selected);
+                            sendControlRequest(Array.from({ length: 171 }, (_, i) => i), false, selected);
                         } else {
                             var addressRange = Array.from({ length: 171 }, (_, i) => i);
-                            addressRange.forEach(address => {
-                                if (address % 5 === buttons[buttonId]) {
-                                    sendControlRequest(address, state, selected);
-                                }
-                            });
+                            var addresses = addressRange.filter(address => address % 5 === buttons[buttonId]);
+                            sendControlRequest(addresses, state, selected);
                         }
                     } else {
                         var offset = options.indexOf(selected) * 5;
                         if (buttonId === "off-button") {
-                            for (var i = 0; i < 5; i++) {
-                                sendControlRequest(offset + i, false, selected);
-                            }
+                            sendControlRequest(Array.from({ length: 5 }, (_, i) => offset + i), false, selected);
                         } else {
                             var address = offset + buttons[buttonId];
-                            sendControlRequest(address, state, selected);
+                            sendControlRequest([address], state, selected);
                         }
                     }
                 });
             }
         });
 
-        function sendControlRequest(address, state, selected) {
-            fetch('/api/control_5605', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ address: address, state: state, selected: selected })
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    setTimeout(function() {
-                        fetchStatus(selected);
-                    }, 500);
+        function sendControlRequest(addresses, state, selected) {
+            var requests = addresses.map(address => {
+                return fetch('/api/control_5605', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ address: address, state: state, selected: selected })
+                }).then(response => {
+                    if (response.status === 403) {
+                        return response.json().then(data => {
+                            return { success: false, message: data.message };
+                        });
+                    }
+                    return response.json();
+                });
+            });
+
+            Promise.all(requests).then(results => {
+                var unauthorized = results.find(result => result.success === false && result.message);
+                if (unauthorized) {
+                    $('#unauthorizedModal').modal('show');
                 } else {
-                    console.error("Failed to control light");
+                    fetchStatus(selected);
                 }
             }).catch(error => {
                 console.error("Error controlling light:", error);

@@ -1,0 +1,14 @@
+# decorators.py
+from functools import wraps
+from flask import jsonify
+from flask_login import current_user
+
+def role_required(role):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if not current_user.is_authenticated or current_user.role != role:
+                return jsonify({"success": False, "message": "You are not authorized to perform this action"}), 403
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator

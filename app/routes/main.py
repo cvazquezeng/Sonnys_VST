@@ -8,6 +8,9 @@ from app import db
 from datetime import datetime, timedelta
 import logging
 from app.models import Ticket
+from decorators import role_required
+
+
 
 
 main_bp = Blueprint('main', __name__)
@@ -274,3 +277,7 @@ def detailed_data():
             details.append({'time': shift['label'], 'opened': opened, 'closed': closed})
 
     return jsonify({'range': selected_range, 'details': details})
+
+@main_bp.route('/unauthorized')
+def unauthorized():
+    return "You are not authorized to view this page.", 403

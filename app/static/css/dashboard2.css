@@ -18,9 +18,7 @@
 .table-common thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
-    
 }
-
 
 .table-common tbody + tbody {
     border-top: 2px solid #dee2e6;
@@ -72,4 +70,29 @@
 
 .table-dark.table-bordered {
     border: 0;
+}
+
+/* Responsive styles for buttons and text */
+@media (max-width: 767.98px) {
+    .btn-group.d-flex.flex-wrap {
+        flex-direction: column;
+    }
+
+    .btn-group .btn {
+        margin-bottom: 10px;
+    }
+
+    .text-md-right {
+        text-align: center !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .navbar-brand {
+        display: none !important; 
+    }
+
+    .navbar-text-logo {
+        display: right !important; 
+    }
 }

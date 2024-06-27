@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, jsonify
+from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_caching import Cache
@@ -27,7 +27,7 @@ def create_app(config_class):
     logging.basicConfig(level=logging.DEBUG)
 
     with app.app_context():
-        from .models import User, Ticket, ClosedTicket     # Import models after app context is set
+        from .models import User, Ticket, ClosedTicket  # Import models after app context is set
 
         @login_manager.user_loader
         def load_user(user_id):
@@ -58,7 +58,7 @@ def create_app(config_class):
 
     # Schedule the update_tickets job
     from .tasks import update_tickets
-    scheduler.add_job(func=update_tickets, args=[app], trigger="interval", seconds=720, id="update_tickets", replace_existing=True)
+    scheduler.add_job(func=update_tickets, args=[app], trigger="interval", seconds=710, id="update_tickets", replace_existing=True)
 
     scheduler.start()
 

@@ -1,0 +1,118 @@
+/* Sidebar styles */
+#sidebar-container {
+    min-height: 100vh;
+    background-color: #192631 !important; /* Updated background color with !important */
+    width: 230px; /* Adjusted width */
+    transition: width 0.3s;
+    position: fixed; /* Fixed position to prevent overlap */
+    top: 0; /* Set top to 0 to extend to the top */
+    z-index: 1040; /* Ensure sidebar is above navbar */
+}
+
+.sidebar-logo {
+    height: auto; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #192631 !important; /* Match sidebar background color with !important */
+    padding-top: 40px; /* Add top padding */
+    padding-bottom: 40px; /* Add bottom padding */
+}
+
+.sidebar-logo-img {
+    max-height: 57px; /* Adjust height as needed */
+    width: auto;
+}
+
+.sidebar-expanded {
+    width: 230px;
+}
+
+.sidebar-collapsed {
+    width: 60px;
+}
+
+#body-row {
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    flex: 1;
+}
+
+#sidebar-container .list-group a {
+    height: 50px;
+    color: white !important; /* Ensure text color is white with !important */
+    display: flex;
+    align-items: center; /* Vertically center text and icon */
+    padding: 0 20px; /* Adjust padding to ensure content is visible */
+    background-color: #192631 !important; /* Updated background color with !important */
+    text-decoration: none; /* Remove underline from links */
+    line-height: 50px; /* Ensure text is centered vertically */
+}
+
+#sidebar-container .list-group a .fa-fw {
+    margin-right: 10px; /* Add spacing between icon and text */
+}
+
+#sidebar-container .list-group a:hover {
+    background-color: #44525c !important; /* Updated hover color with !important */
+}
+
+#sidebar-container .list-group a.active {
+    background-color: #222f3a !important; /* Updated selected item color with !important */
+}
+
+#sidebar-container .list-group .sidebar-submenu a {
+    height: 45px;
+    padding-left: 30px;
+    display: flex;
+    align-items: center; /* Vertically center text and icon */
+    line-height: 45px; /* Ensure text is centered vertically */
+}
+
+.sidebar-submenu {
+    font-size: 0.9rem;
+}
+
+.sidebar-separator-title {
+    background-color: #182835 !important; /* Match sidebar background color with !important */
+    padding-top: 15px; /* Reduce top padding */
+    padding-bottom: 15px; /* Reduce bottom padding */
+    padding-left: 35px; /* Keep left padding for text alignment */
+    display: flex;
+    align-items: center; /* Vertically center text */
+    font-weight: bold; /* Make text bold */
+    line-height: 1; /* Adjust line height */
+}
+
+.sidebar-separator {
+    background-color: #192631 !important; /* Match sidebar background color with !important */
+    height: 25px;
+    display: flex;
+    align-items: center; /* Vertically center text */
+    line-height: 25px; /* Ensure text is centered vertically */
+}
+
+.logo-separator {
+    background-color: #192631 !important; /* Match sidebar background color with !important */
+    height: 60px;
+    display: flex;
+    align-items: center; /* Vertically center text */
+    line-height: 60px; /* Ensure text is centered vertically */
+}
+
+#sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
+    content: " \f0d7";
+    font-family: FontAwesome;
+    display: inline;
+    text-align: right;
+    padding-left: 10px;
+}
+
+#sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
+    content: " \f0da";
+    font-family: FontAwesome;
+    display: inline;
+    text-align: right;
+    padding-left: 10px;
+}

@@ -1,9 +1,11 @@
+# api.py
 from flask import Blueprint, request, jsonify
 from flask_login import login_required
 import threading
 import logging
 from ..modbus import control_lights, turn_off_lights, read_coils_status
 from ..modbus5607 import control_lights5607, turn_off_lights5607, read_coils_status5607
+from decorators import role_required
 
 
 api_bp = Blueprint('api', __name__)
@@ -68,6 +70,8 @@ values_map_5607 = {
 
 @api_bp.route('/api/control_5605', methods=['POST'])
 @login_required
+@role_required('write')
+
 def control5605():
     data = request.json
     address = data.get('address')
@@ -114,6 +118,8 @@ def status5605():
 
 @api_bp.route('/api/control_5607', methods=['POST'])
 @login_required
+@role_required('write')
+
 def control5607():
     data = request.json
     address = data.get('address')

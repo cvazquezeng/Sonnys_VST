@@ -1,0 +1,39 @@
+/* General styles */
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0; /* Remove top padding for the fixed navbar */
+    font-family: Arial, sans-serif;
+    font-size: 1vw; /* Base font size using viewport width */
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 230px; /* Adjust based on sidebar width */
+    transition: margin-left 0.3s;
+    font-size: 1vw; /* Base font size using viewport width */
+}
+
+.full-width {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+/* Ensure navbar items stay on one line */
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap !important; /* Prevent wrapping */
+}
+.navbar-title {
+    position: static; /* Remove absolute positioning */
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Ensure dropdown menu is on top */
+.navbar-nav .nav-item .dropdown-menu {
+    z-index: 1060; /* Higher than the navbar's z-index */
+    position: left;
+}

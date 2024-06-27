@@ -1,0 +1,188 @@
+/* Responsive navbar adjustments */
+@media (max-width: 767.98px) {
+    .navbar .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        position: fixed;
+        top: 56px; /* Adjust based on your navbar height */
+        left: 0;
+        right: 0;
+        background-color: white;
+        z-index: 1031; /* Ensure it appears above content */
+        font-size: 2.5vw; /* Adjust font size for smaller screens */
+    }
+
+    .navbar .navbar-nav .nav-item {
+        width: 100%;
+    }
+
+    .navbar .navbar-nav .nav-item .nav-link {
+        text-align: left; /* Align text to the left */
+        width: 100%;
+        padding: 10px 15px;
+    }
+
+    .navbar {
+        width: 100%;
+        z-index: 1030; /* Lower the z-index for mobile view */
+        font-size: 2.5vw; /* Adjust font size for smaller screens */
+    }
+
+    #sidebar-container {
+        display: none; /* Hide sidebar on small screens */
+    }
+
+    .main-content {
+        margin-left: 0;
+        font-size: 2.5vw; /* Adjust font size for smaller screens */
+    }
+
+    .navbar-text-logo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Align content with space between */
+        width: 100%;
+        flex-wrap: nowrap; /* Prevent wrapping */
+        white-space: nowrap; /* Prevent text from wrapping */
+    }
+
+    .navbar-text-logo .navbar-brand {
+        margin: 0;
+        padding-left: 0; /* Remove left padding */
+        padding-right: 20px; /* Add right padding for spacing */
+    }
+
+    .navbar-text-logo .navbar-logo {
+        margin-left: auto; /* Push the logo to the right */
+    }
+
+    .navbar-logo img {
+        height: 30px;
+    }
+
+    .navbar-toggler-centered {
+        margin-right: auto; /* Align to the left */
+    }
+
+    .navbar-collapse {
+        max-width: 300px; /* Limit the width of the expanded navbar */
+        margin: 0 auto; /* Center the navbar */
+        background-color: rgb(27, 40, 219);
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item .nav-link {
+        text-align: left; /* Align text to the left */
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Align items to the left */
+        padding: 10px 15px;
+    }
+
+    .navbar-nav .nav-item .icon-circle {
+        margin-right: 10px;
+    }
+
+    .navbar-nav .navbar-collapse .collapse {
+        background-color: rgb(51, 75, 212);
+        max-width: 200px; /* Limit the width of the expanded collapse */
+        margin: 0 auto; /* Center the collapse */
+    }
+
+    .navbar-nav .navbar-collapse .collapse .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+}
+
+/* Additional responsive adjustments for larger screens */
+@media (min-width: 768px) and (max-width: 1200px) {
+    body,
+    .navbar,
+    .navbar-nav .nav-item .nav-link,
+    .nav-button,
+    .main-content,
+    .form-inline {
+        font-size: 1.2vw; /* Adjust font size */
+    }
+}
+
+/* Additional responsive adjustments for smaller screens */
+@media (max-width: 767.98px) {
+    body,
+    .navbar,
+    .navbar-nav .nav-item .nav-link,
+    .nav-button,
+    .main-content,
+    .form-inline {
+        font-size: 2.5vw; /* Adjust font size */
+    }
+}
+
+.dropdown-menu {
+    z-index: 1050; /* Higher than the default navbar and content */
+}
+
+.nav-item.dropdown .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    color: #000; /* Change to your preferred color */
+}
+
+.nav-item.dropdown .dropdown-toggle:hover {
+    color: #192631; /* Change to your preferred hover color */
+}
+
+.dropdown-menu .dropdown-item {
+    padding: 10px 20px; /* Adjust padding for better spacing */
+    color: #000; /* Change to your preferred color */
+    z-index: 1050; /* Higher than the default navbar and content */
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #1062b4; /* Change to your preferred hover background color */
+    color: #192631; /* Change to your preferred hover text color */
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    color: #000;
+    transition: background-color 0.2s, color 0.2s;
+    z-index: 1050; /* Higher than the default navbar and content */
+}
+
+.user-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem; /* Adjust the icon size */
+    background-color: #192631; /* Primary blue background color */
+    color: #fff; /* White color for the icon */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Make it a circle */
+}
+
+.navbar .nav-item .nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-item .nav-link .icon-circle {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem; /* Adjust the icon size */
+    background-color: #192631; /* Primary blue background color */
+    color: #fff; /* White color for the icon */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Make it a circle */
+    margin-right: 0.5rem;
+}

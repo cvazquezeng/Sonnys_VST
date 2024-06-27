@@ -2,16 +2,15 @@
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/stack_status_5607.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/offline.css') }}">
 
 <div class="container">
     <!-- Summary Row -->
     <div class="summary-row">
-        <div class="summary-box summary-green">Running: <span id="green-count">0</span></div>
-        <div class="summary-box summary-yellow">Quality: <span id="yellow-count">0</span></div>
-        <div class="summary-box summary-red">Safety: <span id="red-count">0</span></div>
-        <div class="summary-box summary-blue">Materials: <span id="blue-count">0</span></div>
-        <div class="summary-box summary-white">Equipment: <span id="white-count">0</span></div>
+        <div class="summary-box summary-green">Running:  <span id="green-count"> 0</span></div>
+        <div class="summary-box summary-yellow">Quality:  <span id="yellow-count"> 0</span></div>
+        <div class="summary-box summary-red">Safety:  <span id="red-count"> 0</span></div>
+        <div class="summary-box summary-blue">Materials:  <span id="blue-count"> 0</span></div>
+        <div class="summary-box summary-white">Equipment:  <span id="white-count"> 0</span></div>
     </div>
 
     <div class="status-section" id="status-section">
@@ -31,8 +30,29 @@
             <li data-color="green">Green</li>
         </ul>
     </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="unauthorizedModal" tabindex="-1" role="dialog" aria-labelledby="unauthorizedModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="unauthorizedModalLabel">Unauthorized Access</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You are not authorized to perform this action.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="{{ url_for('static', filename='js/stack_status_5607.js') }}"></script>
-<!-- <script src="{{ url_for('static', filename='js/check_modbus_status.js') }}"></script> -->
+
+</body>
 {% endblock %}

@@ -23,7 +23,8 @@ docker-compose up --build -d
 
 + Create new username
 --------------------------
-python usercreation.py config_app.Config username password
+
+python usercreation.py config_app.Config newuser newpassword role
 
 + delete username
 --------------------------

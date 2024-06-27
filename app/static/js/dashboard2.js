@@ -1,58 +1,44 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const filterButtons = document.querySelectorAll('.filter-button');
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded and parsed");
 
+    // Handle filter button clicks
+    const filterButtons = document.querySelectorAll('.filter-button');
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
             const range = this.getAttribute('data-range');
-            // Update URL and reload to get the summary table data
-            window.location.href = `/dashboard2?range=${range}`;
+            fetchDetailedData(range);
         });
     });
 
-    // Function to fetch and display detailed data
+    // Function to fetch detailed data
     function fetchDetailedData(range) {
         fetch(`/api/detailed_data?range=${range}`)
             .then(response => response.json())
             .then(data => {
-                updateDetailedTable(data);
+                renderDetailedTable(data.details);
             })
-            .catch(error => console.error('Error fetching detailed data:', error));
+            .catch(error => console.error('Fetch error:', error));
     }
 
-    // Function to update detailed table
-    function updateDetailedTable(data) {
-        const tbody = document.getElementById('detailed-data');
-        const timeLabel = document.getElementById('time-label');
-        tbody.innerHTML = '';
-
-        if (['today', 'yesterday', '24hours'].includes(data.range)) {
-            timeLabel.textContent = 'Shift';
-            data.details.forEach(detail => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${detail.time}</td><td>${detail.opened}</td><td>${detail.closed}</td>`;
-                tbody.appendChild(row);
-            });
-        } else if (data.range === '7days') {
-            timeLabel.textContent = 'Day';
-            data.details.forEach(detail => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${detail.time}</td><td>${detail.opened}</td><td>${detail.closed}</td>`;
-                tbody.appendChild(row);
-            });
-        } else if (data.range === '30days') {
-            timeLabel.textContent = 'Week';
-            data.details.forEach(detail => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${detail.time}</td><td>${detail.opened}</td><td>${detail.closed}</td>`;
-                tbody.appendChild(row);
-            });
-        }
+    // Function to render detailed table
+    function renderDetailedTable(details) {
+        const detailedDataElement = document.getElementById('detailed-data');
+        detailedDataElement.innerHTML = details.map(detail => `
+            <tr>
+                <td>${detail.time}</td>
+                <td>${detail.opened}</td>
+                <td>${detail.closed}</td>
+            </tr>
+        `).join('');
+        $('#detailed-table').DataTable(); // Initialize DataTables on detailed table
     }
 
-    // Get the current range from the URL and fetch detailed data if needed
-    const urlParams = new URLSearchParams(window.location.search);
-    const range = urlParams.get('range');
-    if (range) {
-        fetchDetailedData(range);
-    }
+    // Initialize detailed table DataTable
+    $('#detailed-table').DataTable();
+    
+    // Fetch detailed data for "today" range by default
+    fetchDetailedData('today');
+
+
+
 });
