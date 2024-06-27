@@ -185,7 +185,7 @@ def dashboard2():
                            average_time_to_close=formatted_average_time_to_close,
                            average_time_to_acknowledge=formatted_average_time_to_acknowledge,
                            range_display=range_display)
-
+    
 @main_bp.route('/api/detailed_data')
 def detailed_data():
     selected_range = request.args.get('range', 'today')
@@ -277,6 +277,14 @@ def detailed_data():
             details.append({'time': shift['label'], 'opened': opened, 'closed': closed})
 
     return jsonify({'range': selected_range, 'details': details})
+
+@main_bp.route('/api/closed_tickets')
+def get_closed_tickets():
+    closed_tickets = ClosedTicket.query.all()
+    tickets_list = [ticket.to_dict() for ticket in closed_tickets]
+    df = pd.DataFrame(tickets_list)
+    return df.to_json(orient='records')
+
 
 @main_bp.route('/unauthorized')
 def unauthorized():

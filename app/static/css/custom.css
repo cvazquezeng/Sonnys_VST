@@ -21,10 +21,30 @@ body, html {
 }
 
 /* Table styles for the dashboard */
+/* Table styles for the dashboard */
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 2.4vw !important; /* Use viewport width units for responsive text size */
+    font-size: 1.2rem; /* Use rem units for the default font size */
+}
+
+/* Adjust font size for smaller screens */
+@media (max-width: 1200px) {
+    table {
+        font-size: 1.4rem; /* Slightly larger for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 1.5rem; /* Larger for small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    table {
+        font-size: 1.6rem; /* Even larger for very small screens */
+    }
 }
 
 th, td {

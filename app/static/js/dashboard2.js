@@ -1,27 +1,40 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM fully loaded and parsed");
 
-    // Handle filter button clicks
     const filterButtons = document.querySelectorAll('.filter-button');
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
             const range = this.getAttribute('data-range');
+            console.log(`Button clicked, range: ${range}`);
             fetchDetailedData(range);
         });
     });
 
-    // Function to fetch detailed data
     function fetchDetailedData(range) {
+        console.log(`Fetching detailed data for range: ${range}`);
         fetch(`/api/detailed_data?range=${range}`)
             .then(response => response.json())
             .then(data => {
-                renderDetailedTable(data.details);
+                console.log('Fetched data:', data);
+                if (data && data.details) {
+                    renderDetailedTable(data.details);
+                } else {
+                    console.error('No details found in the fetched data.');
+                }
+                if (data && data.summary) {
+                    updateSummaryTable(data.summary);
+                } else {
+                    console.error('No summary found in the fetched data.');
+                }
+                if (data && data.range) {
+                    document.getElementById('range-display').innerText = data.range;
+                }
             })
             .catch(error => console.error('Fetch error:', error));
     }
 
-    // Function to render detailed table
     function renderDetailedTable(details) {
+        console.log('Rendering detailed table with details:', details);
         const detailedDataElement = document.getElementById('detailed-data');
         detailedDataElement.innerHTML = details.map(detail => `
             <tr>
@@ -30,15 +43,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${detail.closed}</td>
             </tr>
         `).join('');
-        $('#detailed-table').DataTable(); // Initialize DataTables on detailed table
+
+        if ($.fn.DataTable.isDataTable('#detailed-table')) {
+            $('#detailed-table').DataTable().destroy();
+        }
+        $('#detailed-table').DataTable();
     }
 
-    // Initialize detailed table DataTable
-    $('#detailed-table').DataTable();
-    
-    // Fetch detailed data for "today" range by default
+    function updateSummaryTable(summary) {
+        console.log('Updating summary table with summary:', summary);
+        document.querySelector('#summary-data').innerHTML = `
+            <tr>
+                <td>${summary.tickets_opened}</td>
+                <td>${summary.tickets_closed}</td>
+                <td>${summary.average_time_to_close}</td>
+                <td>${summary.average_time_to_acknowledge}</td>
+            </tr>
+        `;
+    }
+
     fetchDetailedData('today');
-
-
-
 });
