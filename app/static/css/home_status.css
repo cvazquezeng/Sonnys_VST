@@ -10,16 +10,17 @@ body {
     box-sizing: border-box;
 }
 
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 1200px;
+    max-width: 2500px;
     padding: 20px;
     box-sizing: border-box;
-    margin-top: 20px;
+    margin-top: 1px;
 }
 
 /* Summary */
@@ -81,12 +82,12 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%; /* Updated to take full width */
-    padding: 5px;
+    padding: 0px;
     box-sizing: border-box;
     border: 1px solid #ccc;
     box-shadow: 3px 3px 10px #eee;
-    margin-top: 20px;
-    border-radius: 5px;
+    margin-top: 5px;
+   
     background: #f9f9f9;
 }
 
@@ -103,12 +104,13 @@ body {
 }
 
 .status-header {
-    font-size: 3vw;
+    font-size: 2vw;
     font-weight: regular;
     margin-bottom: 0px;
     flex: 1;
     text-align: center; /* Center the text within its flex container */
 }
+/* THIS CONTROLLS THE GRID */
 .status-grid-container {
     width: 100%;
     padding: 20px;
@@ -117,10 +119,31 @@ body {
 
 .status-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Use auto-fit to adjust columns */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 2fr)); /* Use auto-fit to adjust columns */
     gap: 10px; /* Space between the squares */
     justify-content: center;
 
+}
+.status-square {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px #aaa;
+    border-radius: 5px;
+    color: white; /* Default text color */
+    font-size: clamp(12px, 1vw, 20px); /* Responsive font size */
+    padding: 5px; /* Add some padding */
+    background-color: gray; /* Default background color when off */
+    cursor: pointer; /* Change cursor to pointer */
+    user-select: none;
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+    white-space: wrap; /* Prevent text from wrapping */
 }
 
 /* Legend */
@@ -146,27 +169,6 @@ body {
     margin-right: 5px;
 }
 
-.status-square {
-    width: 100%;
-    height: 65px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    text-align: center;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 5px #aaa;
-    border-radius: 5px;
-    color: white; /* Default text color */
-    font-size: clamp(12px, 1.5vw, 20px); /* Responsive font size */
-    padding: 5px; /* Add some padding */
-    background-color: gray; /* Default background color when off */
-    cursor: pointer; /* Change cursor to pointer */
-    user-select: none;
-    overflow: hidden; /* Hide overflowed text */
-    text-overflow: ellipsis; /* Add ellipsis for overflowed text */
-    white-space: nowrap; /* Prevent text from wrapping */
-}
 
 
 @media (max-width: 1200px) {
@@ -201,7 +203,7 @@ body {
     border: 1px solid #ccc;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    padding: 10px;
+    padding: 1px;
 }
 
 .context-menu ul {
@@ -271,4 +273,52 @@ html {
 }
 .square.active {
     background-color: green;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+    .main-content {
+        margin-left: 200px; /* Adjust based on sidebar width */
+        width: calc(100% - 200px); /* Adjust based on sidebar width */
+        font-size: 1.5vw; /* Adjust font size */
+    }
+    .navbar {
+        width: calc(100% - 200px); /* Adjust based on sidebar width */
+        left: 200px; /* Adjust left position based on sidebar width */
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 150px; /* Adjust based on sidebar width */
+        width: calc(100% - 150px); /* Adjust based on sidebar width */
+        font-size: 2vw; /* Adjust font size */
+    }
+    .navbar {
+        width: calc(100% - 150px); /* Adjust based on sidebar width */
+        left: 50px; /* Adjust left position based on sidebar width */
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0; /* Remove sidebar margin */
+        width: 100%; /* Full width */
+        padding: 0px; /* Reduce padding */
+        font-size: 2.5vw; /* Adjust font size */
+    }
+    .navbar {
+        position: static; /* Change to static for smaller screens */
+        width: 90%; /* Full width */
+        margin-bottom: 10px; /* Add margin to push content down */
+        left: 0; /* Reset left position */
+    }
+    #sidebar-container {
+        display: none; /* Hide sidebar on small screens */
+    }
+    .status-grid-container {
+        width: 100%;
+        padding: 0px;
+        box-sizing: border-box;
+    }
 }
