@@ -149,11 +149,11 @@ body {
 /* Legend */
 
 .legend {
-    padding: 10px;
+    padding: 6px;
     border: 0px solid #ccc;
-    border-radius: 5px;
+    border-radius: 3px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     z-index: 50; /* Ensure it's on top */
 }
 
@@ -164,9 +164,11 @@ body {
 }
 
 .legend-square {
+    
     width: 20px;
     height: 20px;
-    margin-right: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 
@@ -192,13 +194,14 @@ body {
 @media (max-width: 576px) {
     .status-square {
         font-size: 2vw; /* Adjust font size for extra small screens */
+        
     }
 }
 
 .context-menu {
     display: none;
     position: absolute;
-    z-index: 1000;
+    z-index: 9000;
     background-color: white;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -239,12 +242,12 @@ body {
     }
 
     .status-header-container {
-        flex-direction: column; /* Stack items vertically */
+        flex-direction: row; /* Stack items vertically */
         align-items: center;
     }
 
     .legend {
-        margin-top: 10px; /* Add space between header and legend */
+        margin-top: 0px; /* Add space between header and legend */
     }
 
     .legend-item {
@@ -309,7 +312,7 @@ html {
     }
     .navbar {
         position: static; /* Change to static for smaller screens */
-        width: 90%; /* Full width */
+        width: 100%; /* Full width */
         margin-bottom: 10px; /* Add margin to push content down */
         left: 0; /* Reset left position */
     }
@@ -320,5 +323,34 @@ html {
         width: 100%;
         padding: 0px;
         box-sizing: border-box;
+    }
+    .status-header{
+        display: none; 
+    }
+    .summary-box {
+        padding: 3px;
+        text-align: center;
+
+        color: rgb(0, 0, 0);
+        border-radius: 1ch;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 3D effect */
+        font-weight: bold;
+        flex: 1 1 10px; /* Adjusted flex property to control growth and shrinkage */
+        max-width: 68px; /* Set a maximum width */
+        margin: 0 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        flex-wrap: nowrap; /* Prevent wrapping to the next line */
+        font-weight: bold;
+        font-family: 'Roboto'
+    }
+    .summary-row {
+        display: flex;
+        width: 100%;
+        justify-content: center; /* Ensure spacing between boxes */
+        margin-bottom: 0px;
     }
 }
