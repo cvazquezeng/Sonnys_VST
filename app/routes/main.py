@@ -8,9 +8,6 @@ from app import db
 from datetime import datetime, timedelta
 import logging
 from app.models import Ticket
-from decorators import role_required
-
-
 
 
 main_bp = Blueprint('main', __name__)
@@ -185,7 +182,8 @@ def dashboard2():
                            average_time_to_close=formatted_average_time_to_close,
                            average_time_to_acknowledge=formatted_average_time_to_acknowledge,
                            range_display=range_display)
-    
+
+
 @main_bp.route('/api/detailed_data')
 def detailed_data():
     selected_range = request.args.get('range', 'today')
@@ -211,42 +209,21 @@ def detailed_data():
         end_date = now
         shifts = []
 
-        # Calculate the shifts based on the start_date and end_date
         morning_shift_start = start_date.replace(hour=7, minute=0, second=0, microsecond=0)
         night_shift_start = start_date.replace(hour=15, minute=30, second=0, microsecond=0)
         next_morning_shift_start = morning_shift_start + timedelta(days=1)
         next_night_shift_start = night_shift_start + timedelta(days=1)
 
         if start_date < morning_shift_start:
-            shifts.append({
-                'label': 'Night Shift',
-                'start': start_date,
-                'end': morning_shift_start
-            })
+            shifts.append({'label': 'Night Shift', 'start': start_date, 'end': morning_shift_start})
         if start_date < night_shift_start:
-            shifts.append({
-                'label': 'Morning Shift',
-                'start': max(start_date, morning_shift_start),
-                'end': night_shift_start
-            })
+            shifts.append({'label': 'Morning Shift', 'start': max(start_date, morning_shift_start), 'end': night_shift_start})
         if start_date < next_morning_shift_start:
-            shifts.append({
-                'label': 'Night Shift',
-                'start': max(start_date, night_shift_start),
-                'end': min(end_date, next_morning_shift_start)
-            })
+            shifts.append({'label': 'Night Shift', 'start': max(start_date, night_shift_start), 'end': min(end_date, next_morning_shift_start)})
         if end_date > next_morning_shift_start:
-            shifts.append({
-                'label': 'Morning Shift',
-                'start': next_morning_shift_start,
-                'end': min(end_date, next_night_shift_start)
-            })
+            shifts.append({'label': 'Morning Shift', 'start': next_morning_shift_start, 'end': min(end_date, next_night_shift_start)})
         if end_date > next_night_shift_start:
-            shifts.append({
-                'label': 'Night Shift',
-                'start': next_night_shift_start,
-                'end': end_date
-            })
+            shifts.append({'label': 'Night Shift', 'start': next_night_shift_start, 'end': end_date})
 
     elif selected_range == '7days':
         start_date = now - timedelta(days=7)
@@ -276,16 +253,33 @@ def detailed_data():
             closed = ClosedTicket.query.filter(ClosedTicket.closed_at >= shift['start'], ClosedTicket.closed_at < shift['end']).count()
             details.append({'time': shift['label'], 'opened': opened, 'closed': closed})
 
-    return jsonify({'range': selected_range, 'details': details})
+    tickets_opened = ClosedTicket.query.filter(ClosedTicket.request_made_at >= start_date, ClosedTicket.request_made_at < end_date).count()
+    tickets_closed = ClosedTicket.query.filter(ClosedTicket.closed_at >= start_date, ClosedTicket.closed_at < end_date).count()
 
-@main_bp.route('/api/closed_tickets')
-def get_closed_tickets():
-    closed_tickets = ClosedTicket.query.all()
-    tickets_list = [ticket.to_dict() for ticket in closed_tickets]
-    df = pd.DataFrame(tickets_list)
-    return df.to_json(orient='records')
+    average_time_to_close = db.session.query(func.avg(text("TIMESTAMPDIFF(SECOND, request_made_at, closed_at)"))).filter(ClosedTicket.closed_at >= start_date, ClosedTicket.closed_at < end_date).scalar()
+    average_time_to_acknowledge = db.session.query(func.avg(text("TIMESTAMPDIFF(SECOND, request_made_at, acknowledged_at)"))).filter(ClosedTicket.acknowledged_at >= start_date, ClosedTicket.acknowledged_at < end_date).scalar()
 
+    def format_seconds(seconds):
+        if seconds is None or seconds == 0:
+            return 'N/A'
+        minutes, _ = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        return f'{int(hours)}h {int(minutes)}m'
 
-@main_bp.route('/unauthorized')
-def unauthorized():
-    return "You are not authorized to view this page.", 403
+    formatted_average_time_to_close = format_seconds(average_time_to_close)
+    formatted_average_time_to_acknowledge = format_seconds(average_time_to_acknowledge)
+
+    response = {
+        'range': selected_range,
+        'details': details,
+        'summary': {
+            'tickets_opened': tickets_opened,
+            'tickets_closed': tickets_closed,
+            'average_time_to_close': formatted_average_time_to_close,
+            'average_time_to_acknowledge': formatted_average_time_to_acknowledge
+        }
+    }
+
+    logging.debug(f"Response data: {response}")
+    return jsonify(response)
+

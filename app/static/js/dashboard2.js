@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchDetailedData(range) {
         console.log(`Fetching detailed data for range: ${range}`);
         fetch(`/api/detailed_data?range=${range}`)
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
             .then(data => {
                 console.log('Fetched data:', data);
                 if (data && data.details) {
@@ -22,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('No details found in the fetched data.');
                 }
                 if (data && data.summary) {
+                    console.log('Summary data found:', data.summary);
                     updateSummaryTable(data.summary);
                 } else {
                     console.error('No summary found in the fetched data.');
