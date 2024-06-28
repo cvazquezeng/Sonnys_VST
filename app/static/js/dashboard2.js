@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/api/detailed_data?range=${range}`)
             .then(response => {
                 console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 return response.json();
             })
             .then(data => {
