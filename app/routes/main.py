@@ -1,6 +1,6 @@
 # main.py
 
-from flask import Blueprint, render_template, redirect, url_for, request, jsonify
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify, send_from_directory
 from flask_login import login_required, logout_user, current_user
 from sqlalchemy import func, text
 from app.models import Ticket, ClosedTicket
@@ -8,6 +8,9 @@ from app import db
 from datetime import datetime, timedelta
 import logging
 from app.models import Ticket
+from pywebpush import webpush, WebPushException
+import json
+
 
 
 main_bp = Blueprint('main', __name__)
@@ -295,3 +298,56 @@ def detailed_data():
 @main_bp.route('/home_status')
 def home_status():
     return render_template('home_status.html')
+
+@main_bp.route('/manifest.json')
+def manifest():
+    return send_from_directory('static', 'manifest.json')
+
+@main_bp.route('/service-worker.js')
+def service_worker():
+    return send_from_directory('static', 'service-worker.js')
+
+# Your generated VAPID keys
+VAPID_PUBLIC_KEY = "BOvF7YOswNRSP8QytJ0d_AbKp9vOnMwopNHfLhsrj-IXbp95vOajtzPeBN3L1oqbAdUUloUKxiyGS3xw_d3NWbs"
+VAPID_PRIVATE_KEY = "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgIAquu2arerwqXJJRVDYrrk13ChKxAuBXCIeOgBbMrSWhRANCAATrxe2DrMDUUj_EMrSdHfwGyqfbzpzMKKTR3y4bK4_iF26febzmo7cz3gTdy9aKmwHVFJaFCsYshkt8cP3dzVm7"
+VAPID_CLAIMS = {
+    "sub": "admin@vst.homes"
+}
+
+# In-memory storage for subscriptions (you should use a database in production)
+subscriptions = []
+
+@main_bp.route('/subscribe', methods=['POST'])
+def subscribe():
+    subscription_info = request.json
+    # Store subscription info in your database
+    return jsonify({"success": True}), 201
+
+
+
+@main_bp.route('/send_notification', methods=['POST'])
+def send_notification():
+    message = request.json.get("message")
+    url = request.json.get("url")
+    # Retrieve subscription info from your database
+    subscription_info = get_subscription_info_from_db()
+    payload = {
+        "title": "New Ticket",
+        "body": message,
+        "url": url
+    }
+    try:
+        webpush(
+            subscription_info,
+            json.dumps(payload),
+            vapid_private_key=VAPID_PRIVATE_KEY,
+            vapid_claims=VAPID_CLAIMS
+        )
+    except WebPushException as ex:
+        print("WebPush failed: {}", repr(ex))
+        return jsonify({"error": repr(ex)}), 500
+    return jsonify({"success": True}), 201
+
+def get_subscription_info_from_db():
+    # Implement this function to retrieve subscription info from your database
+    pass

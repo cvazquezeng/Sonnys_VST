@@ -1,4 +1,5 @@
 /* app/static/css/home_status.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 /* Container */
 body {
@@ -90,6 +91,7 @@ body {
 }
 
 .status-header-container {
+    font-family: 'Roboto', sans-serif; /* Use the new font */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,10 +99,11 @@ body {
     padding: 0 20px;
     box-sizing: border-box;
     position: relative; /* Added to position the legend correctly */
+    
 }
 
 .status-header {
-    font-size: 38px;
+    font-size: 3vw;
     font-weight: regular;
     margin-bottom: 0px;
     flex: 1;
@@ -114,11 +117,10 @@ body {
 
 .status-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Use auto-fit to adjust columns */
-    gap: 13px; /* Spacing between squares */
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Use auto-fit to adjust columns */
+    gap: 10px; /* Space between the squares */
+    justify-content: center;
+
 }
 
 /* Legend */
@@ -156,14 +158,39 @@ body {
     box-shadow: 2px 2px 5px #aaa;
     border-radius: 5px;
     color: white; /* Default text color */
-    font-size: 14px; /* Adjusted font size */
+    font-size: clamp(12px, 1.5vw, 20px); /* Responsive font size */
     padding: 5px; /* Add some padding */
-    overflow-wrap: break-word; /* Allow word wrapping */
-    word-wrap: break-word; /* For older browsers */
-    white-space: normal; /* Ensure wrapping works */
     background-color: gray; /* Default background color when off */
     cursor: pointer; /* Change cursor to pointer */
     user-select: none;
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+
+@media (max-width: 1200px) {
+    .status-square {
+        font-size: 1.5vw; /* Adjust font size for large screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .status-square {
+        font-size: 2vw; /* Adjust font size for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .status-square {
+        font-size: 2.5vw; /* Adjust font size for small screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .status-square {
+        font-size: 2vw; /* Adjust font size for extra small screens */
+    }
 }
 
 .context-menu {
@@ -220,6 +247,14 @@ body {
 
     .legend-item {
         margin-bottom: 10px;
+    }
+    
+    .status-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 2.2vw)); /* Use auto-fit to adjust columns */
+        gap: 10px; /* Space between the squares */
+        justify-content: center;
+    
     }
 }
 

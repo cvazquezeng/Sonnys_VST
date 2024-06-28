@@ -134,74 +134,78 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         function fetchContinuousStatus() {
-            // Fetch status for 5605
-            fetch('/api/continuous_status_5605')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('5605 data:', data); // Add this line to inspect the received data
-                    if (data && data.status) {
-                        statusOptions5605.forEach(function(option) { // Adjust according to 5605 options
-                            if (data.status[option]) {
-                                updateSquare(option, data.status[option]);
-                            }
-                        });
-                        updateSummaryCounts(data.status, '5605'); // Update summary counts for 5605
-                    } else {
-                        console.error("Failed to get continuous status data for 5605");
-                    }
-                })
-                .catch(error => console.error("Error fetching continuous status for 5605:", error));
-
-            // Fetch status for 5607
-            fetch('/api/continuous_status_5607')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('5607 data:', data); // Add this line to inspect the received data
-                    if (data && data.status) {
-                        statusOptions5607.forEach(function(option) { // Adjust according to 5607 options
-                            if (data.status[option]) {
-                                updateSquare(option, data.status[option]);
-                            }
-                        });
-                        updateSummaryCounts(data.status, '5607'); // Update summary counts for 5607
-                    } else {
-                        console.error("Failed to get continuous status data for 5607");
-                    }
-                })
-                .catch(error => console.error("Error fetching continuous status for 5607:", error));
+            Promise.all([
+                fetch('/api/continuous_status_5605').then(response => response.json()),
+                fetch('/api/continuous_status_5607').then(response => response.json())
+            ]).then(([data5605, data5607]) => {
+                if (data5605 && data5605.status) {
+                    statusOptions5605.forEach(option => {
+                        if (data5605.status[option]) {
+                            updateSquare(option, data5605.status[option]);
+                        }
+                    });
+                } else {
+                    console.error("Failed to get continuous status data for 5605");
+                }
+        
+                if (data5607 && data5607.status) {
+                    statusOptions5607.forEach(option => {
+                        if (data5607.status[option]) {
+                            updateSquare(option, data5607.status[option]);
+                        }
+                    });
+                } else {
+                    console.error("Failed to get continuous status data for 5607");
+                }
+        
+                // Combine statuses and update summary counts
+                const combinedStatus = { ...data5605.status, ...data5607.status };
+                updateSummaryCounts(combinedStatus);
+            }).catch(error => console.error("Error fetching continuous status:", error));
         }
-
+        
         setInterval(fetchContinuousStatus, 30000);
         fetchContinuousStatus();
+        
     }
 
-    function updateSummaryCounts(status, type) {
-        let greenCount = parseInt(document.getElementById('green-count').textContent, 10);
-        let yellowCount = parseInt(document.getElementById('yellow-count').textContent, 10);
-        let redCount = parseInt(document.getElementById('red-count').textContent, 10);
-        let blueCount = parseInt(document.getElementById('blue-count').textContent, 10);
-        let whiteCount = parseInt(document.getElementById('white-count').textContent, 10);
-
-        const statusOptionsToUpdate = type === '5605' ? statusOptions5605 : statusOptions5607;
-
-        statusOptionsToUpdate.forEach(option => {
+    function updateSummaryCounts(status) {
+        let greenCount = 0;
+        let yellowCount = 0;
+        let redCount = 0;
+        let blueCount = 0;
+        let whiteCount = 0;
+    
+        // Iterate over the status options, excluding legend squares
+        statusOptions.forEach(option => {
             const coilStatus = status[option];
             if (coilStatus) {
-                if (coilStatus.green) greenCount++;
-                if (coilStatus.yellow) yellowCount++;
-                if (coilStatus.red) redCount++;
-                if (coilStatus.blue) blueCount++;
-                if (coilStatus.white) whiteCount++;
+                if (coilStatus.green) {
+                    greenCount++;
+                }
+                if (coilStatus.yellow) {
+                    yellowCount++;
+                }
+                if (coilStatus.red) {
+                    redCount++;
+                }
+                if (coilStatus.blue) {
+                    blueCount++;
+                }
+                if (coilStatus.white) {
+                    whiteCount++;
+                }
             }
         });
-
+    
         document.getElementById('green-count').textContent = greenCount;
         document.getElementById('yellow-count').textContent = yellowCount;
         document.getElementById('red-count').textContent = redCount;
         document.getElementById('blue-count').textContent = blueCount;
         document.getElementById('white-count').textContent = whiteCount;
     }
-
+    
+    
     function sendControlRequest(addresses, state, selected) {
         var requests = addresses.map(address => {
             // Determine the correct endpoint based on the selected square's data-type attribute

@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}VST Stack Lights{% endblock %}</title>
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <!-- FontAwesome CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <!-- DataTables CSS -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
-        <link rel="manifest" href="{{ url_for('static', filename='images/site.webmanifest') }}">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}VST Stack Lights{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="VST Andon">
+    <meta name="theme-color" content="#000000">
+</head>
 <body>
     <div id="body-row">
         <!-- Sidebar -->
@@ -93,129 +99,138 @@
         <!-- Main content area -->
         <div class="main-content">
             <!-- Navbar -->
- <!-- Navbar -->
- <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
-    <div class="container-fluid d-flex align-items-center justify-content-between">
-        
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        {% if request.endpoint in ['main.stack_status_5605', 'main.stack_status_5607', 'main.stack_control_5605', 'main.stack_control_5607'] %}
-        <div class="nav-item nav-buttons">
-            <button class="nav-button {% if request.endpoint in ['main.stack_status_5605', 'main.stack_control_5605'] %}active{% endif %}" id="nav-button-5605"
-                    data-url-stack-status="{{ url_for('main.stack_status_5605') }}"
-                    data-url-stack-control="{{ url_for('main.stack_control_5605') }}">
-                5605 Building
-            </button>
-            <button class="nav-button {% if request.endpoint in ['main.stack_status_5607', 'main.stack_control_5607'] %}active{% endif %}" id="nav-button-5607"
-                    data-url-stack-status="{{ url_for('main.stack_status_5607') }}"
-                    data-url-stack-control="{{ url_for('main.stack_control_5607') }}">
-                5607 Building
-            </button>
-        </div>
-    {% endif %}
-    
-    {% if request.endpoint in ['main.dashboard', 'main.dashboard2'] %}
-        <div class="nav-item nav-buttons">
-            <button class="nav-button {% if request.endpoint in ['main.dashboard'] %}active{% endif %}" id="nav-button-dashboard"
-                    data-url-stack-AllTickets="{{ url_for('main.dashboard') }}">
-                All Tickets
-            </button>
-            <button class="nav-button {% if request.endpoint in ['main.dashboard2'] %}active{% endif %}" id="nav-button-dashboard1"
-                    data-url-stack-ticketStats="{{ url_for('main.dashboard2') }}">
-                Ticket Stats
-            </button>
-        </div>
-    {% endif %}
-
-        <div class="navbar-text-logo d-flex align-items-center">
-            <a class="navbar-logo" href="#">
-                <img src="{{ url_for('static', filename='images/logonobg.png') }}" alt="Logo" class="logo-img">
-            </a>
-            <!-- <a class="navbar-brand mb-0 h1 navbar-title mx-auto" href="#">{{ title }}</a> -->
-            
-        </div>
-   
-
-
-
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="user-icon mr-2">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        {{ current_user.username }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="{{ url_for('main.profile') }}"><i class="fas fa-user-alt"></i> Profile</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
+                <div class="container-fluid d-flex align-items-center justify-content-between">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    {% if request.endpoint in ['main.stack_status_5605', 'main.stack_status_5607', 'main.stack_control_5605', 'main.stack_control_5607'] %}
+                    <div class="nav-item nav-buttons">
+                        <button class="nav-button {% if request.endpoint in ['main.stack_status_5605', 'main.stack_control_5605'] %}active{% endif %}" id="nav-button-5605"
+                                data-url-stack-status="{{ url_for('main.stack_status_5605') }}"
+                                data-url-stack-control="{{ url_for('main.stack_control_5605') }}">
+                            5605 Building
+                        </button>
+                        <button class="nav-button {% if request.endpoint in ['main.stack_status_5607', 'main.stack_control_5607'] %}active{% endif %}" id="nav-button-5607"
+                                data-url-stack-status="{{ url_for('main.stack_status_5607') }}"
+                                data-url-stack-control="{{ url_for('main.stack_control_5607') }}">
+                            5607 Building
+                        </button>
                     </div>
-                </li>
-                <!-- Move sidebar items into the navbar for mobile view -->
-                <li class="nav-item d-md-none">
-                    <a class="nav-link d-flex align-items-center" href="{{ url_for('main.dashboard') }}">
-                        <div class="icon-circle">
-                            <i class="fas fa-tachometer-alt"></i>
-                        </div>
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item d-md-none">
-                    <a class="nav-link d-flex align-items-center" href="{{ url_for('main.open_tickets') }}">
-                        <div class="icon-circle">
-                            <i class="fas fa-ticket-alt"></i>
-                        </div>
-                        Tickets
-                    </a>
-                </li>
-                <li class="nav-item d-md-none">
-                    <a class="nav-link d-flex align-items-center" href="{{ url_for('main.stack_status_5605') }}">
-                        <div class="icon-circle">
-                            <i class="fas fa-list-alt"></i>
-                        </div>
-                        Stack Status
-                    </a>
-                </li>
-                <li class="nav-item d-md-none">
-                    <a class="nav-link d-flex align-items-center" href="{{ url_for('main.stack_control_5605') }}">
-                        <div class="icon-circle">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        Stack Control
-                    </a>
-                </li>
-                <li class="nav-item d-md-none">
-                    <a class="nav-link d-flex align-items-center" href="{{ url_for('auth.logout') }}">
-                        <div class="icon-circle">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </div>
-                        Logout
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+                    {% endif %}
+                    
+                    {% if request.endpoint in ['main.dashboard', 'main.dashboard2'] %}
+                    <div class="nav-item nav-buttons">
+                        <button class="nav-button {% if request.endpoint in ['main.dashboard'] %}active{% endif %}" id="nav-button-dashboard"
+                                data-url-stack-AllTickets="{{ url_for('main.dashboard') }}">
+                            All Tickets
+                        </button>
+                        <button class="nav-button {% if request.endpoint in ['main.dashboard2'] %}active{% endif %}" id="nav-button-dashboard1"
+                                data-url-stack-ticketStats="{{ url_for('main.dashboard2') }}">
+                            Ticket Stats
+                        </button>
+                    </div>
+                    {% endif %}
+
+                    <div class="navbar-text-logo d-flex align-items-center">
+                        <a class="navbar-logo" href="#">
+                            <img src="{{ url_for('static', filename='images/logonobg.png') }}" alt="Logo" class="logo-img">
+                        </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="user-icon mr-2">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    {{ current_user.username }}
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="{{ url_for('main.profile') }}"><i class="fas fa-user-alt"></i> Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </div>
+                            </li>
+                            <!-- Move sidebar items into the navbar for mobile view -->
+                            <li class="nav-item d-md-none">
+                                <a class="nav-link d-flex align-items-center" href="{{ url_for('main.dashboard') }}">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                    </div>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item d-md-none">
+                                <a class="nav-link d-flex align-items-center" href="{{ url_for('main.open_tickets') }}">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-ticket-alt"></i>
+                                    </div>
+                                    Tickets
+                                </a>
+                            </li>
+                            <li class="nav-item d-md-none">
+                                <a class="nav-link d-flex align-items-center" href="{{ url_for('main.stack_status_5605') }}">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-list-alt"></i>
+                                    </div>
+                                    Stack Status
+                                </a>
+                            </li>
+                            <li class="nav-item d-md-none">
+                                <a class="nav-link d-flex align-items-center" href="{{ url_for('main.stack_control_5605') }}">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    Stack Control
+                                </a>
+                            </li>
+                            <li class="nav-item d-md-none">
+                                <a class="nav-link d-flex align-items-center" href="{{ url_for('auth.logout') }}">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </div>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
             <!-- Page content -->
             <div class="container-fluid">
                 {% block content %}{% endblock %}
             </div>
         </div>
     </div>
- <!-- jQuery -->
- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
- <!-- Popper.js -->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
- <!-- Bootstrap JS -->
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
- <!-- DataTables JS -->
- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
- <!-- Custom JS -->
- <script src="{{ url_for('static', filename='js/navbar-buttons.js') }}"></script>
- <script src="{{ url_for('static', filename='js/inactivity-logout.js') }}"></script>
- <script src="{{ url_for('static', filename='js/collapse.js') }}"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/navbar-buttons.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/inactivity-logout.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/collapse.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+    <!-- Register Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
