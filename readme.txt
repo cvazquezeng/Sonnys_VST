@@ -18,6 +18,8 @@ chmod +x
 --------------------------
 docker-compose down && \
 docker volume prune -f && \
+
+Osop
 docker image prune -f && \
 docker-compose up --build -d
 

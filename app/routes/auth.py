@@ -16,7 +16,7 @@ def login():
         if user and user.check_password(password):
             login_user(user)
             flash('Logged in successfully.', 'success')
-            return redirect(url_for('main.stack_status_5605'))
+            return redirect(url_for('main.home_status'))
         else:
             flash('Invalid username or password.', 'error')
             return redirect(url_for('auth.login'))

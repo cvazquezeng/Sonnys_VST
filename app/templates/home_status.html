@@ -1,0 +1,71 @@
+<!-- app/templates/home_status.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home_status.css') }}">
+
+<div class="container">
+    <!-- Summary Row -->
+    <div class="summary-row">
+        <div class="summary-box summary-green">Running:  <span id="green-count"> 0</span></div>
+        <div class="summary-box summary-yellow">Quality:  <span id="yellow-count"> 0</span></div>
+        <div class="summary-box summary-red">Safety:  <span id="red-count"> 0</span></div>
+        <div class="summary-box summary-blue">Materials:  <span id="blue-count"> 0</span></div>
+        <div class="summary-box summary-white">Equipment:  <span id="white-count"> 0</span></div>
+    </div>
+
+    <div class="status-section" id="status-section">
+        <div class="status-header-container">
+            <div class="status-header">Sonny's StackLights Status</div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-square" style="background-color: white; border: 3px solid rgb(25, 0, 255);"></div>
+                    5605 Building
+                </div>
+                <div class="legend-item">
+                    <div class="legend-square" style="background-color: white; border: 3px solid purple;"></div>
+                    5607 Building
+                </div>
+            </div>
+        </div>
+        <div class="status-grid-container">
+            <div class="status-grid" id="status-grid">
+                <!-- Squares dynamically generated using JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="context-menu" id="context-menu">
+        <ul>
+            <li data-color="off">OFF</li>
+            <li data-color="red">Red</li>
+            <li data-color="yellow">Yellow</li>
+            <li data-color="blue">Blue</li>
+            <li data-color="white">White</li>
+            <li data-color="green">Green</li>
+        </ul>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="unauthorizedModal" tabindex="-1" role="dialog" aria-labelledby="unauthorizedModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="unauthorizedModalLabel">Unauthorized Access</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                You are not authorized to perform this action.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/home_status.js') }}"></script>
+{% endblock %}
+

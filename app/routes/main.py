@@ -16,7 +16,7 @@ main_bp = Blueprint('main', __name__)
 @main_bp.route('/home')
 @login_required
 def home():
-    return redirect(url_for('main.dashboard'))
+    return redirect(url_for('main.home_status'))
 
 @main_bp.route('/profile')
 @login_required
@@ -291,3 +291,7 @@ def detailed_data():
     except Exception as e:
         logging.error(f"Error in detailed_data endpoint: {e}")
         return jsonify({'error': str(e)}), 500
+
+@main_bp.route('/home_status')
+def home_status():
+    return render_template('home_status.html')

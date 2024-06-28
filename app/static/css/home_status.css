@@ -1,0 +1,239 @@
+/* app/static/css/home_status.css */
+
+/* Container */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+/* Summary */
+
+.summary-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* Ensure spacing between boxes */
+    margin-bottom: 20px;
+}
+
+.summary-box {
+    padding: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 3D effect */
+    font-weight: bold;
+    flex: 1;
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.summary-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.summary-green {
+    background-color: #4caf50; /* Material design green */
+}
+
+.summary-yellow {
+    background-color: #ffeb3b; /* Material design yellow */
+    color: black;
+}
+
+.summary-red {
+    background-color: #f44336; /* Material design red */
+}
+
+.summary-blue {
+    background-color: #2196f3; /* Material design blue */
+}
+
+.summary-white {
+    background-color: #ffffff;
+    color: black;
+    border: 1px solid #ccc;
+}
+
+/* Status */
+
+.status-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Updated to take full width */
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 10px #eee;
+    margin-top: 20px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.status-header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: relative; /* Added to position the legend correctly */
+}
+
+.status-header {
+    font-size: 38px;
+    font-weight: regular;
+    margin-bottom: 0px;
+    flex: 1;
+    text-align: center; /* Center the text within its flex container */
+}
+.status-grid-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Use auto-fit to adjust columns */
+    gap: 13px; /* Spacing between squares */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Legend */
+
+.legend {
+    padding: 10px;
+    border: 0px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    z-index: 50; /* Ensure it's on top */
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.legend-square {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.status-square {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px #aaa;
+    border-radius: 5px;
+    color: white; /* Default text color */
+    font-size: 14px; /* Adjusted font size */
+    padding: 5px; /* Add some padding */
+    overflow-wrap: break-word; /* Allow word wrapping */
+    word-wrap: break-word; /* For older browsers */
+    white-space: normal; /* Ensure wrapping works */
+    background-color: gray; /* Default background color when off */
+    cursor: pointer; /* Change cursor to pointer */
+    user-select: none;
+}
+
+.context-menu {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.context-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.context-menu ul li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.context-menu ul li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .summary-row {
+        flex-wrap: wrap; /* allow wrapping */
+        overflow-x: hidden; /* Allow horizontal scrolling */
+    }
+
+    .summary-box {
+        flex: 1 1 100px; /* Ensure they can shrink proportionally */
+        margin: 1px; /* Adjust margin for spacing */
+        font-size: 2.2vw; /* Make font size responsive */
+    }
+
+    .status-section {
+        width: 100%;
+    }
+
+    .status-header-container {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+    }
+
+    .legend {
+        margin-top: 10px; /* Add space between header and legend */
+    }
+
+    .legend-item {
+        margin-bottom: 10px;
+    }
+}
+
+html {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Borders */
+.status-square[data-type="5605"] {
+    box-shadow: 0 0 7px 1.2px rgb(25, 0, 255);
+}
+.status-square[data-type="5607"] {
+    box-shadow: 0 0 7px 1.2px purple;
+}
+.square.active {
+    background-color: green;
+}
