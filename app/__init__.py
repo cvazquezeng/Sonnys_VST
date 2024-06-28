@@ -58,7 +58,7 @@ def create_app(config_class):
 
     # Schedule the update_tickets job
     from .tasks import update_tickets
-    scheduler.add_job(func=update_tickets, args=[app], trigger="interval", seconds=710, id="update_tickets", replace_existing=True)
+    scheduler.add_job(func=update_tickets, args=[app], trigger="interval", seconds=10, id="update_tickets", replace_existing=True)
 
     scheduler.start()
 
