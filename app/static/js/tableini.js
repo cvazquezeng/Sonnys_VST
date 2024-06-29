@@ -10,6 +10,7 @@ function initializeDataTable() {
             "info": true,
             "pageLength": 10, // Number of rows per page
             "lengthMenu": [10, 20, 30, 50], // Options for number of rows per page
+            "order": [[6, "desc"]], // Column index 6 (request_made_at) sorted in descending order
             "language": {
                 "paginate": {
                     "previous": "Previous",

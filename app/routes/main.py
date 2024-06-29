@@ -10,6 +10,7 @@ import logging
 from app.models import Ticket
 from pywebpush import webpush, WebPushException
 import json
+from sqlalchemy import func, asc, desc
 
 
 
@@ -59,6 +60,7 @@ def logout():
 
 @main_bp.route('/open_tickets')
 def open_tickets():
+    
     tickets = Ticket.query.all()
     return render_template('open_tickets.html', title='Open Andon Tickets')
 
@@ -102,6 +104,7 @@ def filter_tickets():
     if issue_type:
         query = query.filter(ClosedTicket.issue_type == issue_type)
 
+    query = query.order_by(desc(ClosedTicket.request_made_at))  # Changed: sorting by 'request_made_at' in descending order
     tickets = query.all()
     print("Filtered tickets:", tickets)
 

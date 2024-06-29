@@ -131,7 +131,14 @@
                         </button>
                     </div>
                     {% endif %}
-
+                    {% if request.endpoint in ['main.home_status'] %}
+                    <div class="nav-item nav-buttons">
+                        <button class="nav-button {% if request.endpoint in ['main.dashboard'] %}active{% endif %}" id="nav-button-homepage"
+                                data-url-stack-AllTickets="{{ url_for('main.home_status') }}">
+                            Home Page
+                        </button>
+                    </div>
+                    {% endif %}
                     <div class="navbar-text-logo d-flex align-items-center">
                         <a class="navbar-logo" href="#">
                             <img src="{{ url_for('static', filename='images/logonobg.png') }}" alt="Logo" class="logo-img">

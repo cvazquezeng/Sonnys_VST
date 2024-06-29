@@ -8,7 +8,7 @@
     <table id="closed-tickets-table" class="display table-common table table-striped table-hover table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
+                <!-- <th>ID</th> -->
                 <th>Ticket ID</th>
                 <th>Line Machine</th>
                 <th>Issue Type</th>
@@ -21,7 +21,7 @@
         <tbody>
             {% for ticket in closed_tickets %}
             <tr>
-                <td class="tooltip-cell" title="{{ ticket.id }}">{{ ticket.id }}</td>
+                <!-- <td class="tooltip-cell" title="{{ ticket.id }}">{{ ticket.id }}</td> -->
                 <td class="tooltip-cell" title="{{ ticket.ticket_id }}">{{ ticket.ticket_id }}</td>
                 <td class="tooltip-cell" title="{{ ticket.line_machine }}">{{ ticket.line_machine }}</td>
                 <td class="tooltip-cell" title="{{ ticket.issue_type }}">{{ ticket.issue_type }}</td>

@@ -73,6 +73,21 @@ body {
 .nav-button i {
     margin-right: 25px; /* Add space between icon and text */
 }
+/* For the general nav-button class */
+
+#nav-button-homepage {
+    position: relative;  /* Positioning */
+    top: 0px;  /* Adjust top position */
+    left: 20px;  /* Adjust left position */
+    width: 150px;  /* Set width */
+    height: 50px;  /* Set height */
+    font-size: var(--homepage-button-font-size, 1.1rem);  /* Customizable font size using CSS variables */
+    color: black; /* Text color black for active button */
+    border-left: 12px solid #1c0669; /* White bottom border for active state */
+
+    /* Additional specific styles for this button */
+}
+
 
 .navbar-logo {
     display: none; /* Hide logo by default */
