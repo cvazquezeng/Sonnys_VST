@@ -1,5 +1,5 @@
 let logoutTimer;
-const logoutAfter = 8 * 60 * 1000; // 15 minutes of inactivity
+const logoutAfter = 30 * 60 * 1000; // 35 minutes of inactivity
 
 function resetTimer() {
     clearTimeout(logoutTimer);

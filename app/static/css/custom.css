@@ -6,45 +6,46 @@ body, html {
     width: 100%;
     font-family: Arial, sans-serif;
 }
+/* Common table styles */
+.table-common {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+.dt-button.btn-success {
+    background-color: #28a745 !important; /* Match Bootstrap success color */
+    border-color: #28a745 !important; /* Match Bootstrap success color */
+    color: #fff !important; /* White text */
+}
+
+.dt-button.btn-success:hover {
+    background-color: #218838 !important; /* Darken on hover */
+    border-color: #1e7e34 !important; /* Darken on hover */
+}
 
 /* Adjust the main content area for the dashboard */
 .main-content {
-    margin-top: 30px !important; /* Force the padding to be applied */
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 56px); /* Adjust for navbar height */
     margin-left: 100px; /* Adjust based on sidebar width */
     box-sizing: border-box;
-    width: calc(100% - 130px); 
-    
-    /* Adjust based on sidebar width */
-    transition: margin-left 0.3s, width 0.3s;
-    overflow: auto; /*Ensure content is scrollable if necessary*/
+    width: calc(100% - 130px); /* Adjust based on sidebar width */
+    overflow: hidden; /* Ensure overflow is handled inside */
     font-size: 1.0vw; /* Use viewport width units for responsive text size */
 }
 
-/* Table styles for the dashboard */
+/* Table container to allow scrolling */
+.table-container {
+    flex: 1; /* Allow it to grow and fill the available space */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
 /* Table styles for the dashboard */
 table {
     width: 100%;
     border-collapse: collapse;
     font-size: 1.2rem; /* Use rem units for the default font size */
-}
-
-/* Adjust font size for smaller screens */
-@media (max-width: 1200px) {
-    table {
-        font-size: 1.4rem; /* Slightly larger for medium screens */
-    }
-}
-
-@media (max-width: 768px) {
-    table {
-        font-size: 1.5rem; /* Larger for small screens */
-    }
-}
-
-@media (max-width: 480px) {
-    table {
-        font-size: 1.6rem; /* Even larger for very small screens */
-    }
 }
 
 th, td {
@@ -61,18 +62,12 @@ th, td {
 
 th {
     background-color: #f2f2f2;
-}
-/* Hover effect for table cells */
-/* Table cell hover effect with tooltip */
-/* Table cell hover effect with tooltip */
-.table-common td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px; /* Adjust as needed */
-    position: relative; /* Needed for hover effect */
+    position: sticky; /* Fix the header row */
+    top: 0;
+    z-index: 2; /* Ensure the header is above the body */
 }
 
+/* Hover effect for table cells */
 .table-common td:hover::after {
     content: attr(data-full-text);
     white-space: normal;
@@ -85,11 +80,9 @@ th {
     top: 100%;
     z-index: 1000;
     width: max-content;
-    max-width: 300px; /* Adjust as needed */
+    max-width: 1300px; /* Adjust as needed */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
-
-
 
 /* Form styles for the dashboard */
 .form-inline {
@@ -110,6 +103,135 @@ th {
 .form-inline .btn {
     min-width: 100px;
 }
+/*################ form dropdown ############################### */
+/*################ form dropdown ############################### */
+/* Flexbox container for dropdowns and button */
+
+/* Container for the dropdowns to align them together */
+.dropdown-combined {
+    display: flex; /* Flexbox layout for alignment */
+    align-items: flex-start; /* Align items to the start of the container */
+    gap: 15px; /* Add padding between the elements */
+    box-sizing: border-box; /* Include padding and border in width/height */
+    padding: 0; /* Ensure no additional padding */
+    margin: 0; /* Ensure no additional margin */
+}
+
+/* Style for search box */
+.search-box {
+    width: 100px; /* Width of the search box */
+    padding: 8px 12px; /* Padding for text */
+    font-size: 14px; /* Font size */
+    color: #333; /* Text color */
+    background-color: #fff; /* Background color */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-sizing: border-box; /* Include padding and border in width/height */
+}
+
+/* Ensure dropdowns have a consistent appearance */
+.btn.multiselect {
+    width: 100px; /* Fixed width to align with other elements */
+    padding: 8px 12px; /* Padding for text and icon */
+    font-size: 14px; /* Adjust font size */
+    color: #020074; /* Text color */
+    background-color: #fff; /* Background color */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    cursor: pointer; /* Pointer cursor */
+    transition: border-color 0.3s ease; /* Transition for border color */
+    display: flex; /* Flexbox for alignment */
+    justify-content: space-between; /* Space between text and icon */
+    align-items: center; /* Vertically center content */
+    appearance: none; /* Custom appearance */
+    box-sizing: border-box; /* Include padding and border in width/height */
+}
+
+/* Change border color on focus */
+.btn.multiselect:focus {
+    border-color: #007bff; /* Focus border color */
+    outline: none; /* Remove outline */
+}
+
+/* Style each item in the dropdown */
+.multiselect-container.dropdown-menu > li > a {
+    color: #020074; /* Text color */
+
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: left; /* Align text and checkbox to the left */
+    padding: 0px; /* Padding for items */
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Ellipsis for overflow */
+    border-bottom: 1px solid #eee; /* Border for each item */
+    gap: 5px; /* Add gap between checkbox and label text */
+    box-sizing: border-box; /* Include padding and border in width/height */
+    background-color: rgba(255, 255, 255, 0.5); /* White with 50% opacity */
+
+}
+
+/* Remove last item's border */
+.multiselect-container.dropdown-menu > li:last-child > a {
+    border-bottom: none;
+}
+
+/* Dropdown menu scrollbar */
+.multiselect-container.dropdown-menu {
+    /*flex: 1; /* Allows dropdowns to take available space */
+    max-height: 600px; /* Maximum height */
+    overflow-y: auto; /* Vertical scrolling */
+    overflow-x: auto; /* Prevent horizontal scrolling */
+    box-sizing: border-box; /* Include padding and border in width/height */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+.multiselect-container {
+    color: #020074; /* Text color */
+
+    background-color: rgba(255, 255, 255, 1); /* White with 50% opacity */
+    border: 1px solid #ccc; /* Optional: Border for better visibility */
+}
+
+
+/* Align checkboxes and labels to the left */
+.multiselect-container input[type="checkbox"] {
+    margin-right: 8px; /* Space between checkbox and text */
+}
+
+/* Ensure the label for each item is aligned properly */
+.multiselect-container label {
+    color: hsl(241, 100%, 44%); /* Text color */
+
+    display: flex;
+    justify-content: flex-start; /* Align content to the left */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    box-sizing: border-box; /* Include padding and border in width/height */
+}
+
+/* Styling for squares to align with dropdowns */
+.square {
+    width: 100px; /* Same width as dropdown */
+    height: 100px; /* Set height if necessary */
+    border: 1px solid #ccc; /* Add border */
+    box-sizing: border-box; /* Include padding and border in width/height */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Vertically center content */
+    justify-content: center; /* Horizontally center content */
+    background-color: #f8f9fa; /* Background color */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+}
+
+/*################ form dropdown ############################### */
+
+
+
 
 /* Ensure the navbar retains its width and handles overflow */
 .navbar {
@@ -176,11 +298,12 @@ th {
     #sidebar-container {
         display: none; /* Hide sidebar on small screens */
     }
-
 }
+
 .dropdown-menu {
     z-index: 1050; /* Higher than the default navbar and content */
 }
+
 .nav-item.dropdown .dropdown-toggle {
     display: flex;
     align-items: center;
@@ -190,24 +313,25 @@ th {
 .nav-item.dropdown .dropdown-toggle:hover {
     color: #192631; /* Change to your preferred hover color */
 }
+
 .dropdown-menu .dropdown-item {
     padding: 10px 20px; /* Adjust padding for better spacing */
-    color: #000; /* Change to your preferred color */
+    color: #000000; /* Change to your preferred color */
     z-index: 1050; /* Higher than the default navbar and content */
-
 }
 
 .dropdown-menu .dropdown-item:hover {
     background-color: #f8f9fa; /* Change to your preferred hover background color */
     color: #192631; /* Change to your preferred hover text color */
 }
+
 .dropdown-item {
     padding: 10px 20px;
     color: #000;
     transition: background-color 0.2s, color 0.2s;
     z-index: 1050; /* Higher than the default navbar and content */
-
 }
+
 .user-icon {
     width: 30px;
     height: 30px;
@@ -219,10 +343,12 @@ th {
     justify-content: center;
     border-radius: 50%; /* Make it a circle */
 }
+
 .navbar .nav-item .nav-link {
     display: flex;
     align-items: center;
 }
+
 .navbar .nav-item .nav-link .icon-circle {
     width: 30px;
     height: 30px;
@@ -234,7 +360,7 @@ th {
     justify-content: center;
     border-radius: 50%; /* Make it a circle */
     margin-right: 0.5rem;
-    }
+}
 /* Tooltip styles */
 .tooltip-custom {
     display: none;

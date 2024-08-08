@@ -13,4 +13,4 @@ app = create_app(config_class)
 migrate = Migrate(app, db)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5006)
+    app.run(debug=True, port=5007)

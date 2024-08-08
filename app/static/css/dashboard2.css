@@ -1,11 +1,5 @@
 /* dashboard2.css */
 
-/* Common table styles */
-.table-common {
-    width: 100%;
-    margin-bottom: 1rem;
-    color: #212529;
-}
 
 .table-common th,
 .table-common td {
